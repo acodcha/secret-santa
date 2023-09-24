@@ -13,7 +13,7 @@ project(
   "secret-santa"
   VERSION 1.0.0
   LANGUAGES CXX
-  DESCRIPTION "Sends email messages for organizing a Secret Santa gift-exchange event!"
+  DESCRIPTION "Sends email messages for organizing a Secret Santa gift exchange event!"
   HOMEPAGE_URL "https://github.com/acodcha/secret-santa"
 )
 option(
