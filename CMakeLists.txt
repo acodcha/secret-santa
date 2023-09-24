@@ -52,7 +52,9 @@ if(TEST_SECRET_SANTA)
 
   # Define the Secret Santa test executables.
 
-  # TODO.
+  add_executable(example ${PROJECT_SOURCE_DIR}/test/Example.cpp)
+  target_link_libraries(example GTest::gtest_main)
+  gtest_discover_tests(example)
 
   message(STATUS "The Secret Santa tests were configured. Build the tests with \"make --jobs=16\" and run them with \"make test\"")
 else()
