@@ -2,7 +2,7 @@
 
 [![build and test](https://github.com/acodcha/secret-santa/actions/workflows/build_and_test.yaml/badge.svg?branch=main)](https://github.com/acodcha/secret-santa/actions/workflows/build_and_test.yaml)
 
-Sends email messages for organizing a Secret Santa gift-exchange event!
+Sends email messages for organizing a Secret Santa gift exchange event!
 
 - [Requirements](#requirements)
 - [Configuration](#configuration)
