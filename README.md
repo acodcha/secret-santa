@@ -2,11 +2,17 @@
 
 [![build and test](https://github.com/acodcha/secret-santa/actions/workflows/build_and_test.yaml/badge.svg?branch=main)](https://github.com/acodcha/secret-santa/actions/workflows/build_and_test.yaml)
 
-Organizes a "Secret Santa" gift exchange event! Given a list of participant names, addresses, and emails, this project randomizes the gift exchange and emails instructions to each participant.
+Organizes a "Secret Santa" gift exchange event! Given a list of participant names, addresses, and emails, this project randomizes the gift exchange and sends instructions via email to each participant.
 
 - [Requirements](#requirements)
 - [Configuration](#configuration)
+  - [Email](#configuration-email)
+  - [S-Nail Package](#configuration-s-nail-package)
+  - [Secret Santa Executable](#configuration-secret-santa-executable)
 - [Usage](#usage)
+  - [Command-Line](#usage-command-line)
+  - [Configuration File](#usage-configuration-file)
+  - [Results File](#usage-results-file)
 - [Testing](#testing)
 - [License](#license)
 
@@ -18,15 +24,25 @@ This project requires the following packages:
 - **CMake:** On Ubuntu, install CMake with `sudo apt install cmake`.
 - **S-nail**: On Ubuntu, install S-nail with `sudo apt install s-nail`.
 
-The yaml-cpp library (<https://github.com/jbeder/yaml-cpp>) is also used for parsing YAML files. However, you do not need to install this library. Instead, this library is automatically downloaded, built, and linked with this project when this project is configured.
+Additionally, the _yaml-cpp_ library (<https://github.com/jbeder/yaml-cpp>) is used for parsing YAML files. However, you do not need to install this library; instead, this library is automatically downloaded, built, and linked with this project when this project is configured.
 
-### Email Account and Password
+## Configuration
 
-If you intend to use a Gmail email address to send messages, the easiest way of doing so is to create an App Password on your Google account. See <https://support.google.com/accounts/answer/185833> for instructions on how to do so. Google App Passwords are not as secure as other more modern options, so it is recommended to delete your App Password once you are done using this project. Better yet, create a new Gmail email address to be used only for your Secret Santa event.
+- [Email](#configuration-email)
+- [S-Nail Package](#configuration-s-nail-package)
+- [Secret Santa Executable](#configuration-secret-santa-executable)
 
-### S-nail
+[(Back to Top)](#secret-santa)
 
-The S-nail package requires some configuration. In your home directory, create an S-nail configuration file:
+### Configuration: Email
+
+If you intend to use a Gmail email address to send messages, the easiest way of doing so is to create an App Password on your Google account. See <https://support.google.com/accounts/answer/185833> for instructions on how to do so. Google App Passwords are not as secure as other more modern options, so it is recommended to delete your App Password once you are done using this project. Better yet, create a new Gmail email address specifically for your Secret Santa event!
+
+[(Back to Configuration)](#configuration)
+
+### Configuration: S-Nail Package
+
+The S-nail package requires some configuration. In your home directory, create a `.mailrc` configuration file:
 
 ```bash
 touch ~/.mailrc
@@ -51,7 +67,9 @@ set from="myusername@gmail.com"
 set mta=smtps://myusername:mypassword@smtp.gmail.com:465
 ```
 
-Replace `myusername` with your email address and `mypassword` with your email password. If using Gmail, the password is your App Password. Send a test message to verify that your email account and S-nail are configured correctly:
+Replace `myusername` with your email address and `mypassword` with your email password. If using Gmail, the password is your App Password.
+
+Send an email message to yourself to verify that S-nail is configured correctly:
 
 ```bash
 echo "This is a test message." | s-nail --subject "Test Email" myusername@gmail.com
@@ -59,9 +77,9 @@ echo "This is a test message." | s-nail --subject "Test Email" myusername@gmail.
 
 Again, replace `myusername` with your email address. This should send a short email from yourself to yourself.
 
-[(Back to Top)](#secret-santa)
+[(Back to Configuration)](#configuration)
 
-## Configuration
+### Configuration: Secret Santa Executable
 
 Clone this project's repository and configure it with:
 
@@ -76,13 +94,50 @@ make --jobs=16
 
 This builds the main executable, `build/bin/secret-santa`.
 
-[(Back to Top)](#secret-santa)
+[(Back to Configuration)](#configuration)
 
 ## Usage
 
-TODO.
+- [Command-Line](#usage-command-line)
+- [Configuration File](#usage-configuration-file)
+- [Results File](#usage-results-file)
 
 [(Back to Top)](#secret-santa)
+
+### Usage: Command-Line
+
+Print usage information to the console by running the main executable from the `build` directory with:
+
+```bash
+bin/secret-santa --help
+```
+
+Run the main executable from the `build` directory with:
+
+```bash
+bin/secret-santa --configuration <path> [--results <path>] [--email] [--seed <integer>]
+```
+
+The command-line arguments are:
+
+- `--configuration <path>`: Path to the YAML configuration file to be read. Required.
+- `--results <path>`: Path to the YAML results file to be written. Optional. If omitted, no results file is written.
+- `--email`: Whether or not to email instructions to each participant. Optional. If omitted, instructions are not emailed to any participant.
+- `--seed <integer>`: Seed value for pseudo-random number generation. If omitted, the seed value is randomized.
+
+[(Back to Usage)](#usage)
+
+### Usage: Configuration File
+
+TODO.
+
+[(Back to Usage)](#usage)
+
+### Usage: Results File
+
+TODO.
+
+[(Back to Usage)](#usage)
 
 ## Testing
 
