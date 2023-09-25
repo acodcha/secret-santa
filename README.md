@@ -42,7 +42,7 @@ If you intend to use a Gmail email address to send messages, the easiest way of 
 
 ### Configuration: S-Nail Package
 
-The S-nail package requires some configuration. In your home directory, create a `.mailrc` configuration file:
+The S-nail package requires some configuration. In your home directory, create a `.mailrc` configuration file with:
 
 ```bash
 touch ~/.mailrc
@@ -69,7 +69,7 @@ set mta=smtps://myusername:mypassword@smtp.gmail.com:465
 
 Replace `myusername` with your email address and `mypassword` with your email password. If using Gmail, the password is your App Password.
 
-Send an email message to yourself to verify that S-nail is configured correctly:
+Verify that S-nail is correctly configured by sending a short email message to yourself with:
 
 ```bash
 echo "This is a test message." | s-nail --subject "Test Email" myusername@gmail.com
@@ -143,15 +143,17 @@ TODO.
 
 Testing is optional, disabled by default, and requires the following additional package:
 
-- **GoogleTest**: The GoogleTest library (<https://github.com/google/googletest>) is used for testing. On Ubuntu, install it with `sudo apt install libgtest-dev`. When testing is enabled, if the GoogleTest library is not found on your system, it is automatically downloaded, built, and linked with the Physical Quantities library.
+- **GoogleTest**: The GoogleTest library (<https://github.com/google/googletest>) is used for testing. On Ubuntu, install it with `sudo apt install libgtest-dev`. When testing is enabled, if the GoogleTest library is not found on your system, it is automatically downloaded, built, and linked with this project when this project is configured.
 
-You can manually test this project from the `build` directory with:
+You may optionally test this project from the `build` directory with:
 
 ```bash
 cmake .. -DTEST_SECRET_SANTA=ON
 make --jobs=16
 make test
 ```
+
+This builds and runs the tests.
 
 [(Back to Top)](#secret-santa)
 
