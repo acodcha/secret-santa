@@ -22,9 +22,19 @@ option(
   OFF
 )
 
+# Download and setup the yaml-cpp library.
+include(FetchContent)
+FetchContent_Declare(
+  yaml-cpp
+  GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
+  GIT_TAG master
+)
+FetchContent_MakeAvailable(yaml-cpp)
+message(STATUS "The yaml-cpp library was fetched from: https://github.com/jbeder/yaml-cpp.git")
+
 # Define the main Secret Santa executable.
 add_executable(secret-santa ${PROJECT_SOURCE_DIR}/source/Main.cpp)
-target_link_libraries(secret-santa PUBLIC stdc++fs)
+target_link_libraries(secret-santa PUBLIC stdc++fs yaml-cpp)
 
 # Configure the Secret Santa tests.
 if(TEST_SECRET_SANTA)
@@ -35,7 +45,6 @@ if(TEST_SECRET_SANTA)
     message(STATUS "The GoogleTest library was found at: ${GTest_CONFIG}")
   else()
     # In this case, the GoogleTest library is not found, so fetch it instead.
-    include(FetchContent)
     FetchContent_Declare(
       GoogleTest
       GIT_REPOSITORY https://github.com/google/googletest.git
