@@ -22,14 +22,21 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#include <yaml-cpp/yaml.h>
+#include "../source/String.hpp"
 
-#include "Settings.hpp"
+#include <gtest/gtest.h>
 
-int main(int argc, char* argv[]) {
-  const SecretSanta::Settings settings{argc, argv};
+namespace SecretSanta {
 
-  std::cout << "End of program." << std::endl;
+namespace {
 
-  return EXIT_SUCCESS;
+TEST(String, PadToLength) {
+  EXPECT_EQ(PadToLength("", 0), "");
+  EXPECT_EQ(PadToLength("", 10), "          ");
+  EXPECT_EQ(PadToLength("Hello world!", 0), "Hello world!");
+  EXPECT_EQ(PadToLength("Hello world!", 15), "Hello world!   ");
 }
+
+}  // namespace
+
+}  // namespace SecretSanta

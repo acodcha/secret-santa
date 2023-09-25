@@ -37,7 +37,7 @@ project(
   "secret-santa"
   VERSION 1.0.0
   LANGUAGES CXX
-  DESCRIPTION "Sends email messages for organizing a Secret Santa gift exchange event!"
+  DESCRIPTION "Organizes a Secret Santa gift exchange event!"
   HOMEPAGE_URL "https://github.com/acodcha/secret-santa"
 )
 option(
@@ -85,9 +85,13 @@ if(TEST_SECRET_SANTA)
 
   # Define the Secret Santa test executables.
 
-  add_executable(example ${PROJECT_SOURCE_DIR}/test/Example.cpp)
-  target_link_libraries(example GTest::gtest_main)
-  gtest_discover_tests(example)
+  add_executable(settings ${PROJECT_SOURCE_DIR}/test/Settings.cpp)
+  target_link_libraries(settings GTest::gtest_main)
+  gtest_discover_tests(settings)
+
+  add_executable(string ${PROJECT_SOURCE_DIR}/test/String.cpp)
+  target_link_libraries(string GTest::gtest_main)
+  gtest_discover_tests(string)
 
   message(STATUS "The Secret Santa tests were configured. Build the tests with \"make --jobs=16\" and run them with \"make test\"")
 else()

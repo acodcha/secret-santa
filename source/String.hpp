@@ -22,14 +22,29 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#include <yaml-cpp/yaml.h>
+#ifndef SECRET_SANTA_STRING_HPP
+#define SECRET_SANTA_STRING_HPP
 
-#include "Settings.hpp"
+#include <algorithm>
+#include <string>
+#include <string_view>
 
-int main(int argc, char* argv[]) {
-  const SecretSanta::Settings settings{argc, argv};
+// Namespace that encapsulates all of the Secret Santa program's contents.
+namespace SecretSanta {
 
-  std::cout << "End of program." << std::endl;
-
-  return EXIT_SUCCESS;
+// Returns a copy of a given string where the copy has been padded to a given
+// length with trailing spaces. If the given string is already longer than the
+// given length, nothing is changed.
+std::string PadToLength(
+    const std::string_view text, const std::size_t length) noexcept {
+  std::string padded_text{text};
+  const std::size_t text_length = text.size();
+  if (length > text_length) {
+    padded_text.append(length - text_length, ' ');
+  }
+  return padded_text;
 }
+
+}  // namespace SecretSanta
+
+#endif  // SECRET_SANTA_STRING_HPP

@@ -22,14 +22,29 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#include <yaml-cpp/yaml.h>
+#ifndef SECRET_SANTA_PROGRAM_HPP
+#define SECRET_SANTA_PROGRAM_HPP
 
-#include "Settings.hpp"
+#include <string>
 
-int main(int argc, char* argv[]) {
-  const SecretSanta::Settings settings{argc, argv};
+namespace SecretSanta {
 
-  std::cout << "End of program." << std::endl;
+// Namespace containing information about this program and its compilation.
+namespace Program {
 
-  return EXIT_SUCCESS;
-}
+// Title of this program.
+static const std::string Title{"Secret Santa"};
+
+// Date and time at which this program was compiled.
+static const std::string CompilationDateAndTime{
+    std::string{__DATE__} + ", " + std::string{__TIME__}};
+
+// Description of this program.
+static const std::string Description{
+    "Organizes a \"Secret Santa\" gift exchange event!"};
+
+}  // namespace Program
+
+}  // namespace SecretSanta
+
+#endif  // SECRET_SANTA_PROGRAM_HPP

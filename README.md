@@ -2,7 +2,7 @@
 
 [![build and test](https://github.com/acodcha/secret-santa/actions/workflows/build_and_test.yaml/badge.svg?branch=main)](https://github.com/acodcha/secret-santa/actions/workflows/build_and_test.yaml)
 
-Sends email messages for organizing a Secret Santa gift exchange event!
+Organizes a "Secret Santa" gift exchange event! Given a list of participant names, addresses, and emails, this project randomizes the gift exchange and emails instructions to each participant.
 
 - [Requirements](#requirements)
 - [Configuration](#configuration)
@@ -22,7 +22,7 @@ The yaml-cpp library (<https://github.com/jbeder/yaml-cpp>) is also used for par
 
 ### Email Account and Password
 
-If you intend to use a Gmail email address to send messages, the easiest way of doing so is to create an App Password on your Google account. See <https://support.google.com/accounts/answer/185833> for instructions on how to do so. Google App Passwords are not as secure as other more modern options, so it is recommended to delete your App Password once you are done using this project.
+If you intend to use a Gmail email address to send messages, the easiest way of doing so is to create an App Password on your Google account. See <https://support.google.com/accounts/answer/185833> for instructions on how to do so. Google App Passwords are not as secure as other more modern options, so it is recommended to delete your App Password once you are done using this project. Better yet, create a new Gmail email address to be used only for your Secret Santa event.
 
 ### S-nail
 
