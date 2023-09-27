@@ -22,8 +22,8 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#ifndef SECRET_SANTA_SETTINGS_HPP
-#define SECRET_SANTA_SETTINGS_HPP
+#ifndef SECRET_SANTA_RANDOMIZER_SETTINGS_HPP
+#define SECRET_SANTA_RANDOMIZER_SETTINGS_HPP
 
 #include <cstdlib>
 #include <filesystem>
@@ -31,20 +31,20 @@
 #include <optional>
 #include <string>
 
+#include "../String.hpp"
 #include "Argument.hpp"
 #include "Program.hpp"
-#include "String.hpp"
 
-namespace SecretSanta {
+namespace SecretSanta::Randomizer {
 
-// Settings of the Secret Santa program.
+// Settings of the Secret Santa Randomizer program.
 class Settings {
 public:
   // Default constructor. Constructs settings with default parameters.
   Settings() = default;
 
   // Constructor. Constructs settings from command-line arguments.
-  Settings(const int argc, char* argv[]) noexcept : executable_name_(argv[0]) {
+  Settings(const int argc, char* argv[]) noexcept {
     ParseArguments(argc, argv);
     PrintHeader();
     PrintCommand();
@@ -56,15 +56,10 @@ public:
     return configuration_file_;
   }
 
-  // Path to the YAML results file to be written. If empty, no results file is
-  // written.
-  const std::filesystem::path& ResultsFile() const noexcept {
-    return results_file_;
-  }
-
-  // Whether or not to email instructions to each participant.
-  constexpr bool SendEmails() const noexcept {
-    return send_emails_;
+  // Path to the YAML matchings file to be written. If empty, no matchings file
+  // is written.
+  const std::filesystem::path& MatchingsFile() const noexcept {
+    return matchings_file_;
   }
 
   // Optional seed value for pseudo-random number generation. If no value is
@@ -74,30 +69,28 @@ public:
   }
 
 private:
-  // Prints the program header information to the console.
+  // Prints the program's header information to the console.
   void PrintHeader() const {
     std::cout << Program::Title << std::endl;
     std::cout << Program::Description << std::endl;
     std::cout << "Version: " << Program::CompilationDateAndTime << std::endl;
   }
 
-  // Prints the program usage information to the console.
+  // Prints the program's usage information to the console.
   void PrintUsage() const {
     const std::string indent{"  "};
 
     std::cout << "Usage:" << std::endl;
 
     std::cout << indent << executable_name_ << " " << Argument::Configuration()
-              << " [" << Argument::Results() << "] "
-              << " [" << Argument::Email() << "] [" << Argument::Seed() << "]"
-              << std::endl;
+              << " [" << Argument::Matchings() << "] "
+              << " [" << Argument::Seed() << "]" << std::endl;
 
     // Compute the padding length of the argument patterns.
     const std::size_t length = std::max({
         Argument::Help().length(),
         Argument::Configuration().length(),
-        Argument::Results().length(),
-        Argument::Email().length(),
+        Argument::Matchings().length(),
         Argument::Seed().length(),
     });
 
@@ -111,21 +104,16 @@ private:
         << "Path to the YAML configuration file to be read. Required."
         << std::endl;
 
-    std::cout << indent << PadToLength(Argument::Results(), length) << indent
-              << "Path to the YAML results file to be written. Optional."
+    std::cout << indent << PadToLength(Argument::Matchings(), length) << indent
+              << "Path to the YAML matchings file to be written. Optional."
               << std::endl;
-
-    std::cout
-        << indent << PadToLength(Argument::Email(), length) << indent
-        << "Whether or not to email instructions to each participant. Optional."
-        << std::endl;
 
     std::cout << indent << PadToLength(Argument::Seed(), length) << indent
               << "Seed value for pseudo-random number generation. Optional."
               << std::endl;
   }
 
-  // Parses the command-line arguments.
+  // Parses the program's command-line arguments.
   void ParseArguments(const int argc, char* argv[]) {
     if (argc <= 1) {
       PrintHeader();
@@ -133,8 +121,10 @@ private:
       exit(EXIT_SUCCESS);
     }
 
-    // Iterate over the command-line arguments. Skip the first argument because
-    // it is the name of the executable.
+    if (argc >= 1) {
+      executable_name_ = argv[0];
+    }
+
     for (int index = 1; index < argc;) {
       if (argv[index] == Argument::Key::Help) {
         PrintHeader();
@@ -144,13 +134,10 @@ private:
                  && AtLeastOneMore(index, argc)) {
         configuration_file_ = argv[index + 1];
         index += 2;
-      } else if (argv[index] == Argument::Key::Results
+      } else if (argv[index] == Argument::Key::Matchings
                  && AtLeastOneMore(index, argc)) {
-        results_file_ = argv[index + 1];
+        matchings_file_ = argv[index + 1];
         index += 2;
-      } else if (argv[index] == Argument::Key::Email) {
-        send_emails_ = true;
-        ++index;
       } else if (
           argv[index] == Argument::Key::Seed && AtLeastOneMore(index, argc)) {
         random_seed_ = std::strtoll(argv[index + 1], nullptr, 10);
@@ -174,11 +161,10 @@ private:
   void PrintCommand() const {
     std::cout
         << "Command: " << executable_name_ << " "
-        << Argument::Key::Configuration << " " << configuration_file_ << " "
-        << (!results_file_.empty() ?
-                " " + Argument::Key::Results + " " + results_file_.string() :
-                "")
-        << (send_emails_ ? " " + std::string(Argument::Email()) : "")
+        << Argument::Key::Configuration << " " << configuration_file_
+        << (!matchings_file_.empty() ? " " + Argument::Key::Matchings + " "
+                                           + matchings_file_.string() :
+                                       "")
         << (random_seed_.has_value() ?
                 " " + Argument::Key::Seed + " "
                     + std::to_string(random_seed_.value()) :
@@ -191,18 +177,11 @@ private:
     std::cout << "- The configuration will be read from: "
               << configuration_file_ << std::endl;
 
-    if (results_file_.empty()) {
-      std::cout << "- The results will not be written to a file." << std::endl;
-    } else {
+    if (matchings_file_.empty()) {
       std::cout
-          << "- The results will be written to: " << results_file_ << std::endl;
-    }
-
-    if (send_emails_) {
-      std::cout
-          << "- Instructions will be emailed to each participant." << std::endl;
+          << "- The matchings will not be written to a file." << std::endl;
     } else {
-      std::cout << "- Instructions will not be emailed to any participants."
+      std::cout << "- The matchings will be written to: " << matchings_file_
                 << std::endl;
     }
 
@@ -216,24 +195,21 @@ private:
     }
   }
 
-  // Name of the Secret Santa executable.
+  // Name of the Secret Santa Randomizer executable.
   std::string executable_name_;
 
   // Path to the YAML configuration file to be read.
   std::filesystem::path configuration_file_;
 
-  // Path to the YAML results file to be written. If empty, no results file is
-  // written.
-  std::filesystem::path results_file_;
-
-  // Whether or not to email instructions to each participant.
-  bool send_emails_ = false;
+  // Path to the YAML matchings file to be written. If empty, no matchings file
+  // is written.
+  std::filesystem::path matchings_file_;
 
   // Optional seed value for pseudo-random number generation. If no value is
   // specified, the seed value is randomized.
   std::optional<int64_t> random_seed_;
 };
 
-}  // namespace SecretSanta
+}  // namespace SecretSanta::Randomizer
 
-#endif  // SECRET_SANTA_SETTINGS_HPP
+#endif  // SECRET_SANTA_RANDOMIZER_SETTINGS_HPP

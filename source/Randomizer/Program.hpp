@@ -22,29 +22,27 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#ifndef SECRET_SANTA_PROGRAM_HPP
-#define SECRET_SANTA_PROGRAM_HPP
+#ifndef SECRET_SANTA_RANDOMIZER_PROGRAM_HPP
+#define SECRET_SANTA_RANDOMIZER_PROGRAM_HPP
 
 #include <string>
 
-namespace SecretSanta {
+namespace SecretSanta::Randomizer::Program {
 
-// Namespace containing information about this program and its compilation.
-namespace Program {
+// Title of the Secret Santa Randomizer program.
+static const std::string Title{"Secret Santa Randomizer"};
 
-// Title of this program.
-static const std::string Title{"Secret Santa"};
-
-// Date and time at which this program was compiled.
+// Date and time at which the Secret Santa Randomizer program was compiled.
 static const std::string CompilationDateAndTime{
     std::string{__DATE__} + ", " + std::string{__TIME__}};
 
-// Description of this program.
+// Description of the Secret Santa Randomizer program.
 static const std::string Description{
-    "Organizes a \"Secret Santa\" gift exchange event!"};
+    "Organizes a \"Secret Santa\" gift exchange event! Reads a YAML "
+    "configuration file containing a list of participants, randomly generates "
+    "Secret Santa matchings among the participants, and outputs the matchings "
+    "to a YAML file."};
 
-}  // namespace Program
+}  // namespace SecretSanta::Randomizer::Program
 
-}  // namespace SecretSanta
-
-#endif  // SECRET_SANTA_PROGRAM_HPP
+#endif  // SECRET_SANTA_RANDOMIZER_PROGRAM_HPP

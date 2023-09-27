@@ -22,30 +22,24 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#ifndef SECRET_SANTA_ARGUMENTS_HPP
-#define SECRET_SANTA_ARGUMENTS_HPP
+#ifndef SECRET_SANTA_RANDOMIZER_ARGUMENT_HPP
+#define SECRET_SANTA_RANDOMIZER_ARGUMENT_HPP
 
 #include <string>
 #include <string_view>
 
-namespace SecretSanta {
-
-// Namespace listing this program's command-line argument keywords.
-namespace Argument {
+namespace SecretSanta::Randomizer::Argument {
 
 namespace Key {
 
-// Prints this program's usage instructions and exits. Optional.
+// Prints usage instructions and exits. Optional.
 static const std::string Help{"--help"};
 
 // Path to the YAML configuration file to be read. Required.
 static const std::string Configuration{"--configuration"};
 
-// Path to the YAML results file to be written. Optional.
-static const std::string Results{"--results"};
-
-// Whether or not to email instructions to each participant. Optional.
-static const std::string Email{"--email"};
+// Path to the YAML matchings file to be written. Optional.
+static const std::string Matchings{"--matchings"};
 
 // Seed value for pseudo-random number generation. Optional.
 static const std::string Seed{"--seed"};
@@ -62,7 +56,7 @@ static const std::string Path{"<path>"};
 
 }  // namespace Value
 
-// Prints this program's usage instructions and exits. Optional.
+// Prints usage instructions and exits. Optional.
 std::string_view Help() {
   return Key::Help;
 }
@@ -72,14 +66,9 @@ std::string Configuration() {
   return Key::Configuration + " " + Value::Path;
 }
 
-// Path to the YAML results file to be written. Optional.
-std::string Results() {
-  return Key::Results + " " + Value::Path;
-}
-
-// Whether or not to email instructions to each participant. Optional.
-std::string_view Email() {
-  return Key::Email;
+// Path to the YAML matchings file to be written. Optional.
+std::string Matchings() {
+  return Key::Matchings + " " + Value::Path;
 }
 
 // Seed value for pseudo-random number generation. Optional.
@@ -87,8 +76,6 @@ std::string Seed() {
   return Key::Seed + " " + Value::Integer;
 }
 
-}  // namespace Argument
+}  // namespace SecretSanta::Randomizer::Argument
 
-}  // namespace SecretSanta
-
-#endif  // SECRET_SANTA_ARGUMENTS_HPP
+#endif  // SECRET_SANTA_RANDOMIZER_ARGUMENT_HPP

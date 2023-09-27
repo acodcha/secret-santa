@@ -22,53 +22,49 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#include "../source/Settings.hpp"
+#include "../../source/Randomizer/Settings.hpp"
 
 #include <gtest/gtest.h>
 
-namespace SecretSanta {
+namespace SecretSanta::Randomizer {
 
 namespace {
 
-TEST(Settings, Default) {
+TEST(RandomizerSettings, Default) {
   const Settings settings;
   EXPECT_EQ(settings.ConfigurationFile(), "");
-  EXPECT_EQ(settings.ResultsFile(), "");
-  EXPECT_FALSE(settings.SendEmails());
+  EXPECT_EQ(settings.MatchingsFile(), "");
   EXPECT_EQ(settings.RandomSeed(), std::nullopt);
 }
 
-TEST(Settings, Regular) {
+TEST(RandomizerSettings, Regular) {
   char program[] = "bin/secret-santa";
 
   char configuration_key[] = "--configuration";
   char configuration_value[] = "path/to/some/directory/configuration.yaml";
 
-  char results_key[] = "--results";
-  char results_value[] = "path/to/some/directory/results.yaml";
-
-  char email[] = "--email";
+  char matchings_key[] = "--matchings";
+  char matchings_value[] = "path/to/some/directory/matchings.yaml";
 
   char seed_key[] = "--seed";
   char seed_value[] = "42";
 
-  int argc = 8;
+  int argc = 7;
 
   char* argv[] = {
-      program,     configuration_key, configuration_value,
-      results_key, results_value,     email,
-      seed_key,    seed_value,
+      program,         configuration_key, configuration_value, matchings_key,
+      matchings_value, seed_key,          seed_value,
   };
 
   const Settings settings{argc, argv};
 
   EXPECT_EQ(settings.ConfigurationFile(),
             "path/to/some/directory/configuration.yaml");
-  EXPECT_EQ(settings.ResultsFile(), "path/to/some/directory/results.yaml");
-  EXPECT_TRUE(settings.SendEmails());
+  EXPECT_EQ(settings.MatchingsFile(), "path/to/some/directory/matchings.yaml");
+  ASSERT_TRUE(settings.RandomSeed().has_value());
   EXPECT_EQ(settings.RandomSeed(), 42);
 }
 
 }  // namespace
 
-}  // namespace SecretSanta
+}  // namespace SecretSanta::Randomizer

@@ -27,9 +27,10 @@
 #include "Settings.hpp"
 
 int main(int argc, char* argv[]) {
-  const SecretSanta::Settings settings{argc, argv};
+  const SecretSanta::Messenger::Settings settings{argc, argv};
 
-  std::cout << "End of program." << std::endl;
+  std::cout << "End of " << SecretSanta::Messenger::Program::Title << "."
+            << std::endl;
 
   return EXIT_SUCCESS;
 }

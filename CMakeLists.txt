@@ -56,9 +56,13 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(yaml-cpp)
 message(STATUS "The yaml-cpp library was fetched from: https://github.com/jbeder/yaml-cpp.git")
 
-# Define the main Secret Santa executable.
-add_executable(secret-santa ${PROJECT_SOURCE_DIR}/source/Main.cpp)
-target_link_libraries(secret-santa PUBLIC stdc++fs yaml-cpp)
+# Define the Secret Santa Randomizer executable.
+add_executable(secret-santa-randomizer ${PROJECT_SOURCE_DIR}/source/Randomizer/Main.cpp)
+target_link_libraries(secret-santa-randomizer PUBLIC stdc++fs yaml-cpp)
+
+# Define the Secret Santa Messenger executable.
+add_executable(secret-santa-messenger ${PROJECT_SOURCE_DIR}/source/Messenger/Main.cpp)
+target_link_libraries(secret-santa-messenger PUBLIC stdc++fs yaml-cpp)
 
 # Configure the Secret Santa tests.
 if(TEST_SECRET_SANTA)
@@ -85,9 +89,13 @@ if(TEST_SECRET_SANTA)
 
   # Define the Secret Santa test executables.
 
-  add_executable(settings ${PROJECT_SOURCE_DIR}/test/Settings.cpp)
-  target_link_libraries(settings GTest::gtest_main)
-  gtest_discover_tests(settings)
+  add_executable(messenger_settings ${PROJECT_SOURCE_DIR}/test/Messenger/Settings.cpp)
+  target_link_libraries(messenger_settings GTest::gtest_main)
+  gtest_discover_tests(messenger_settings)
+
+  add_executable(randomizer_settings ${PROJECT_SOURCE_DIR}/test/Randomizer/Settings.cpp)
+  target_link_libraries(randomizer_settings GTest::gtest_main)
+  gtest_discover_tests(randomizer_settings)
 
   add_executable(string ${PROJECT_SOURCE_DIR}/test/String.cpp)
   target_link_libraries(string GTest::gtest_main)
