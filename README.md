@@ -10,10 +10,10 @@ Organizes a "Secret Santa" gift exchange event! Given a list of participant name
   - [S-Nail Package](#configuration-s-nail-package)
   - [Secret Santa Executables](#configuration-secret-santa-executables)
 - [Usage](#usage)
-  - [Secret Santa Randomizer](#usage-secret-santa-randomizer)
-  - [Secret Santa Messenger](#usage-secret-santa-messenger)
   - [Configuration File](#usage-configuration-file)
+  - [Secret Santa Randomizer](#usage-secret-santa-randomizer)
   - [Matchings File](#usage-matchings-file)
+  - [Secret Santa Messenger](#usage-secret-santa-messenger)
 - [Testing](#testing)
 - [License](#license)
 
