@@ -24,10 +24,17 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "../Configuration.hpp"
 #include "Settings.hpp"
 
 int main(int argc, char* argv[]) {
   const SecretSanta::Messenger::Settings settings{argc, argv};
+
+  const SecretSanta::Configuration configuration{settings.ConfigurationFile()};
+
+  // const SecretSanta::Matchings matchings{settings.MatchingsFile()};
+
+  // const SecretSanta::Emailer emailer{configuration, matchings};
 
   std::cout << "End of " << SecretSanta::Messenger::Program::Title << "."
             << std::endl;

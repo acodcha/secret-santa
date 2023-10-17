@@ -22,17 +22,17 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#ifndef SECRET_SANTA_RANDOMIZER_CONFIGURATION_HPP
-#define SECRET_SANTA_RANDOMIZER_CONFIGURATION_HPP
+#ifndef SECRET_SANTA_CONFIGURATION_HPP
+#define SECRET_SANTA_CONFIGURATION_HPP
 
 #include <yaml-cpp/yaml.h>
 
 #include <filesystem>
 #include <map>
 
-#include "../Participant.hpp"
+#include "Participant.hpp"
 
-namespace SecretSanta::Randomizer {
+namespace SecretSanta {
 
 // Configuration details read from a YAML configuration file.
 class Configuration {
@@ -145,6 +145,6 @@ private:
   std::map<std::string, Participant> participants_;
 };
 
-}  // namespace SecretSanta::Randomizer
+}  // namespace SecretSanta
 
-#endif  // SECRET_SANTA_RANDOMIZER_CONFIGURATION_HPP
+#endif  // SECRET_SANTA_CONFIGURATION_HPP

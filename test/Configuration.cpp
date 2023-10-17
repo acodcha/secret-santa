@@ -22,16 +22,16 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#include "../../source/Randomizer/Configuration.hpp"
+#include "../source/Configuration.hpp"
 
 #include <gtest/gtest.h>
 
-namespace SecretSanta::Randomizer {
+namespace SecretSanta {
 
 namespace {
 
-TEST(RandomizerConfiguration, Constructor) {
-  const Configuration configuration{"../test/Randomizer/configuration.yaml"};
+TEST(Configuration, Constructor) {
+  const Configuration configuration{"../test/configuration.yaml"};
   EXPECT_EQ(configuration.MessageSubject(), "Secret Santa Gift Exchange 2023");
   EXPECT_FALSE(configuration.MessageBody().empty());
   EXPECT_EQ(configuration.Participants().size(), 3);
@@ -41,7 +41,7 @@ TEST(RandomizerConfiguration, Constructor) {
             "Alice Smith");
 }
 
-TEST(RandomizerConfiguration, DefaultConstructor) {
+TEST(Configuration, DefaultConstructor) {
   const Configuration configuration;
   EXPECT_EQ(configuration.MessageSubject(), "Secret Santa Gift Exchange");
   EXPECT_EQ(configuration.MessageBody(),
@@ -52,4 +52,4 @@ TEST(RandomizerConfiguration, DefaultConstructor) {
 
 }  // namespace
 
-}  // namespace SecretSanta::Randomizer
+}  // namespace SecretSanta
