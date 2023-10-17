@@ -51,6 +51,21 @@ public:
     PrintSettings();
   }
 
+  // Destructor. Destroys this settings object.
+  ~Settings() noexcept = default;
+
+  // Deleted copy constructor.
+  Settings(const Settings& other) = delete;
+
+  // Deleted move constructor.
+  Settings(Settings&& other) noexcept = delete;
+
+  // Deleted copy assignment operator.
+  Settings& operator=(const Settings& other) = delete;
+
+  // Deleted move assignment operator.
+  Settings& operator=(Settings&& other) noexcept = delete;
+
   // Path to the YAML configuration file to be read.
   const std::filesystem::path& ConfigurationFile() const noexcept {
     return configuration_file_;

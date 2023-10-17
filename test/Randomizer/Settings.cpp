@@ -30,14 +30,7 @@ namespace SecretSanta::Randomizer {
 
 namespace {
 
-TEST(RandomizerSettings, Default) {
-  const Settings settings;
-  EXPECT_EQ(settings.ConfigurationFile(), "");
-  EXPECT_EQ(settings.MatchingsFile(), "");
-  EXPECT_EQ(settings.RandomSeed(), std::nullopt);
-}
-
-TEST(RandomizerSettings, Regular) {
+TEST(RandomizerSettings, Constructor) {
   char program[] = "bin/secret-santa";
 
   char configuration_key[] = "--configuration";
@@ -63,6 +56,13 @@ TEST(RandomizerSettings, Regular) {
   EXPECT_EQ(settings.MatchingsFile(), "path/to/some/directory/matchings.yaml");
   ASSERT_TRUE(settings.RandomSeed().has_value());
   EXPECT_EQ(settings.RandomSeed(), 42);
+}
+
+TEST(RandomizerSettings, DefaultConstructor) {
+  const Settings settings;
+  EXPECT_EQ(settings.ConfigurationFile(), "");
+  EXPECT_EQ(settings.MatchingsFile(), "");
+  EXPECT_EQ(settings.RandomSeed(), std::nullopt);
 }
 
 }  // namespace

@@ -25,7 +25,7 @@
 cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 
 # Define the global settings.
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffast-math -O3 -Wall -Wextra -Wno-return-type -Wpedantic")
@@ -90,15 +90,23 @@ if(TEST_SECRET_SANTA)
   # Define the Secret Santa test executables.
 
   add_executable(messenger_settings ${PROJECT_SOURCE_DIR}/test/Messenger/Settings.cpp)
-  target_link_libraries(messenger_settings GTest::gtest_main)
+  target_link_libraries(messenger_settings yaml-cpp GTest::gtest_main)
   gtest_discover_tests(messenger_settings)
 
+  add_executable(participant ${PROJECT_SOURCE_DIR}/test/Participant.cpp)
+  target_link_libraries(participant yaml-cpp GTest::gtest_main)
+  gtest_discover_tests(participant)
+
+  add_executable(randomizer_configuration ${PROJECT_SOURCE_DIR}/test/Randomizer/Configuration.cpp)
+  target_link_libraries(randomizer_configuration yaml-cpp GTest::gtest_main)
+  gtest_discover_tests(randomizer_configuration)
+
   add_executable(randomizer_settings ${PROJECT_SOURCE_DIR}/test/Randomizer/Settings.cpp)
-  target_link_libraries(randomizer_settings GTest::gtest_main)
+  target_link_libraries(randomizer_settings yaml-cpp GTest::gtest_main)
   gtest_discover_tests(randomizer_settings)
 
   add_executable(string ${PROJECT_SOURCE_DIR}/test/String.cpp)
-  target_link_libraries(string GTest::gtest_main)
+  target_link_libraries(string yaml-cpp GTest::gtest_main)
   gtest_discover_tests(string)
 
   message(STATUS "The Secret Santa tests were configured. Build the tests with \"make --jobs=16\" and run them with \"make test\"")

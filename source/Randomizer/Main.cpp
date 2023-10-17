@@ -24,10 +24,19 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "Configuration.hpp"
 #include "Settings.hpp"
 
 int main(int argc, char* argv[]) {
   const SecretSanta::Randomizer::Settings settings{argc, argv};
+
+  const SecretSanta::Randomizer::Configuration configuration{
+      settings.ConfigurationFile()};
+
+  // const SecretSanta::Matchings matchings{
+  //     configuration.Participants(), settings.RandomSeed()};
+
+  // matchings.write(settings.MatchingsFile());
 
   std::cout << "End of " << SecretSanta::Randomizer::Program::Title << "."
             << std::endl;

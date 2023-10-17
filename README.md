@@ -111,7 +111,32 @@ This builds the main executables:
 
 ### Usage: Configuration File
 
-TODO.
+A sample YAML configuration file is shown here: [test/Randomizer/configuration.yaml](test/Randomizer/configuration.yaml)
+
+The YAML configuration file must follow the following schema:
+
+```yaml
+---
+message:
+  subject: <text>
+  body: <text>
+participants:
+  - <name>:
+      email: <text>
+      address: <text>
+      instructions: <text>
+  - <name>:
+      email: <text>
+      address: <text>
+      instructions: <text>
+  [...]
+```
+
+The YAML configuration file contains the following fields:
+
+- `message->subject`: Subject of the email message that will be sent to each participant. A default value is used if no message subject is defined in the YAML configuration file.
+- `message->body`: Body of the email message that will be sent to each participant. A default value is used if no message body is defined in the YAML configuration file. Information regarding the participant's giftee is automatically appended to this body.
+- `participants`: List of participants. Each participant contains a name along with an email address, civic address, and instructions. Participant names must be unique. Participants' email addresses, civic addresses, and instructions are optional.
 
 [(Back to Usage)](#usage)
 

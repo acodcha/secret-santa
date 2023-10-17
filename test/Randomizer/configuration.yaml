@@ -1,0 +1,27 @@
+---
+message:
+  subject: Secret Santa Gift Exchange 2023
+  body: |
+    Hello!
+
+    You are receiving this message because you opted to participate in a Secret Santa gift exchange!
+
+    - This year, the event will be held virtually. The event will start at 2:00 PM on December 23, 2023. You will receive a Zoom meeting invite from Alice Smith.
+    - See below for your giftee information.
+    - Purchase a gift around 30 $US in value, wrap it, and mail it to your giftee's address. The easiest way of doing so is through an online retailer such as Amazon, where you can select a gift wrapping option and set a delivery address.
+    - Please make sure your giftee receives their gift before the Secret Santa event! Shipping can take time, so plan accordingly!
+    - Do not contact your giftee directly, and do not tell them that you are their Secret Santa! Part of the event will involve a guessing game to uncover the identity of your Secret Santa.
+    - Once you have received your gift from your anonymous Secret Santa, please let Alice Smith know at alice.smith@gmail.com.
+    - If you have any questions, please ask Alice Smith at alice.smith@gmail.com.
+participants:
+  - Alice Smith:
+      email: alice.smith@gmail.com
+      address: 123 First Ave, Apt 1, Townsville, CA 91234 USA
+      instructions: Leave the package with the doorman in the lobby.
+  - Bob Johnson:
+      email: bob.johnson@gmail.com
+      address: 456 Second St, Apt 2, Metrocity, CA 92345 USA
+  - Claire Jones:
+      email: claire.jones@gmail.com
+      address: 789 Third Rd, Villageburg, CA 93456 USA
+      instructions: Hide the package behind the bushes.

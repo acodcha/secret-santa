@@ -22,43 +22,34 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#include "../../source/Messenger/Settings.hpp"
+#include "../../source/Randomizer/Configuration.hpp"
 
 #include <gtest/gtest.h>
 
-namespace SecretSanta::Messenger {
+namespace SecretSanta::Randomizer {
 
 namespace {
 
-TEST(MessengerSettings, Constructor) {
-  char program[] = "bin/secret-santa";
-
-  char configuration_key[] = "--configuration";
-  char configuration_value[] = "path/to/some/directory/configuration.yaml";
-
-  char matchings_key[] = "--matchings";
-  char matchings_value[] = "path/to/some/directory/matchings.yaml";
-
-  int argc = 5;
-
-  char* argv[] = {
-      program,       configuration_key, configuration_value,
-      matchings_key, matchings_value,
-  };
-
-  const Settings settings{argc, argv};
-
-  EXPECT_EQ(settings.ConfigurationFile(),
-            "path/to/some/directory/configuration.yaml");
-  EXPECT_EQ(settings.MatchingsFile(), "path/to/some/directory/matchings.yaml");
+TEST(RandomizerConfiguration, Constructor) {
+  const Configuration configuration{"../test/Randomizer/configuration.yaml"};
+  EXPECT_EQ(configuration.MessageSubject(), "Secret Santa Gift Exchange 2023");
+  EXPECT_FALSE(configuration.MessageBody().empty());
+  EXPECT_EQ(configuration.Participants().size(), 3);
+  ASSERT_NE(configuration.Participants().find("Alice Smith"),
+            configuration.Participants().cend());
+  EXPECT_EQ(configuration.Participants().find("Alice Smith")->second.Name(),
+            "Alice Smith");
 }
 
-TEST(MessengerSettings, DefaultConstructor) {
-  const Settings settings;
-  EXPECT_EQ(settings.ConfigurationFile(), "");
-  EXPECT_EQ(settings.MatchingsFile(), "");
+TEST(RandomizerConfiguration, DefaultConstructor) {
+  const Configuration configuration;
+  EXPECT_EQ(configuration.MessageSubject(), "Secret Santa Gift Exchange");
+  EXPECT_EQ(configuration.MessageBody(),
+            "Hello!\n\n"
+            "You are receiving this message because you opted to participate "
+            "in a Secret Santa gift exchange!");
 }
 
 }  // namespace
 
-}  // namespace SecretSanta::Messenger
+}  // namespace SecretSanta::Randomizer
