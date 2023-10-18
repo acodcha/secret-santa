@@ -26,31 +26,15 @@
 
 #include <gtest/gtest.h>
 
+#include "CreateSampleParticipant.hpp"
+
 namespace SecretSanta {
 
 namespace {
 
-YAML::Node CreateTestNodeA() {
-  YAML::Node node;
-  node["Alice Smith"]["email"] = "alice.smith@gmail.com";
-  node["Alice Smith"]["address"] =
-      "123 First Ave, Apt 1, Townsville, CA 91234 USA";
-  node["Alice Smith"]["instructions"] =
-      "Leave the package with the doorman in the lobby.";
-  return node;
-}
-
-YAML::Node CreateTestNodeB() {
-  YAML::Node node;
-  node["Bob Johnson"]["email"] = "bob.johnson@gmail.com";
-  node["Bob Johnson"]["address"] =
-      "456 Second St, Apt 2, Villagetown, CA 92345 USA";
-  return node;
-}
-
 TEST(Participant, ComparisonOperators) {
-  const Participant first{CreateTestNodeA()};
-  const Participant second{CreateTestNodeB()};
+  const Participant first{CreateSampleParticipantA()};
+  const Participant second{CreateSampleParticipantB()};
   EXPECT_EQ(first, first);
   EXPECT_NE(first, second);
   EXPECT_LT(first, second);
@@ -62,7 +46,7 @@ TEST(Participant, ComparisonOperators) {
 }
 
 TEST(Participant, Constructor) {
-  const Participant participant{CreateTestNodeA()};
+  const Participant participant{CreateSampleParticipantA()};
   EXPECT_EQ(participant.Name(), "Alice Smith");
   EXPECT_EQ(participant.Email(), "alice.smith@gmail.com");
   EXPECT_EQ(
@@ -72,14 +56,14 @@ TEST(Participant, Constructor) {
 }
 
 TEST(Participant, CopyAssignmentOperator) {
-  const Participant first{CreateTestNodeA()};
-  Participant second = CreateTestNodeB();
+  const Participant first{CreateSampleParticipantA()};
+  Participant second = CreateSampleParticipantB();
   second = first;
   EXPECT_EQ(second, first);
 }
 
 TEST(Participant, CopyConstructor) {
-  const Participant first{CreateTestNodeA()};
+  const Participant first{CreateSampleParticipantA()};
   const Participant second{first};
   EXPECT_EQ(second, first);
 }
@@ -93,27 +77,27 @@ TEST(Participant, DefaultConstructor) {
 }
 
 TEST(Participant, Hash) {
-  const Participant first{CreateTestNodeA()};
-  const Participant second{CreateTestNodeB()};
+  const Participant first{CreateSampleParticipantA()};
+  const Participant second{CreateSampleParticipantB()};
   std::hash<Participant> hash;
   EXPECT_NE(hash(first), hash(second));
 }
 
 TEST(Participant, MoveAssignmentOperator) {
-  Participant first{CreateTestNodeA()};
-  Participant second = CreateTestNodeB();
+  Participant first{CreateSampleParticipantA()};
+  Participant second = CreateSampleParticipantB();
   second = std::move(first);
-  EXPECT_EQ(second, Participant(CreateTestNodeA()));
+  EXPECT_EQ(second, Participant(CreateSampleParticipantA()));
 }
 
 TEST(Participant, MoveConstructor) {
-  Participant first{CreateTestNodeA()};
+  Participant first{CreateSampleParticipantA()};
   Participant second{std::move(first)};
-  EXPECT_EQ(second, Participant(CreateTestNodeA()));
+  EXPECT_EQ(second, Participant(CreateSampleParticipantA()));
 }
 
 TEST(Participant, Print) {
-  const Participant participant{CreateTestNodeA()};
+  const Participant participant{CreateSampleParticipantA()};
   EXPECT_EQ(participant.Print(),
             "Alice Smith (email: alice.smith@gmail.com; address: 123 First "
             "Ave, Apt 1, Townsville, CA 91234 USA; instructions: Leave the "
@@ -121,7 +105,7 @@ TEST(Participant, Print) {
 }
 
 TEST(Participant, Stream) {
-  const Participant participant{CreateTestNodeA()};
+  const Participant participant{CreateSampleParticipantA()};
   std::stringstream stream;
   stream << participant;
   EXPECT_EQ(stream.str(),
@@ -131,7 +115,7 @@ TEST(Participant, Stream) {
 }
 
 TEST(Participant, YAML) {
-  const Participant participant{CreateTestNodeA()};
+  const Participant participant{CreateSampleParticipantA()};
   const YAML::Node node = participant.YAML();
   ASSERT_TRUE(node.IsMap());
   ASSERT_EQ(node.size(), 1);

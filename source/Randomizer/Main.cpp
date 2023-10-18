@@ -25,6 +25,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "../Configuration.hpp"
+#include "../Matchings.hpp"
 #include "Settings.hpp"
 
 int main(int argc, char* argv[]) {
@@ -32,10 +33,10 @@ int main(int argc, char* argv[]) {
 
   const SecretSanta::Configuration configuration{settings.ConfigurationFile()};
 
-  // const SecretSanta::Matchings matchings{
-  //     configuration.Participants(), settings.RandomSeed()};
+  const SecretSanta::Matchings matchings{
+      configuration.Participants(), settings.RandomSeed()};
 
-  // matchings.write(settings.MatchingsFile());
+  matchings.Write(settings.MatchingsFile());
 
   std::cout << "End of " << SecretSanta::Randomizer::Program::Title << "."
             << std::endl;

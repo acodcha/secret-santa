@@ -25,6 +25,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "../Configuration.hpp"
+#include "../Matchings.hpp"
 #include "Settings.hpp"
 
 int main(int argc, char* argv[]) {
@@ -32,7 +33,7 @@ int main(int argc, char* argv[]) {
 
   const SecretSanta::Configuration configuration{settings.ConfigurationFile()};
 
-  // const SecretSanta::Matchings matchings{settings.MatchingsFile()};
+  const SecretSanta::Matchings matchings{settings.MatchingsFile()};
 
   // const SecretSanta::Emailer emailer{configuration, matchings};
 

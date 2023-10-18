@@ -22,30 +22,41 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#include "../source/Configuration.hpp"
+#ifndef SECRET_SANTA_CREATE_SAMPLE_PARTICIPANT_HPP
+#define SECRET_SANTA_CREATE_SAMPLE_PARTICIPANT_HPP
 
-#include <gtest/gtest.h>
+#include <yaml-cpp/yaml.h>
+
+#include "../source/Participant.hpp"
 
 namespace SecretSanta {
 
-namespace {
-
-TEST(Configuration, Constructor) {
-  const Configuration configuration{"../test/configuration.yaml"};
-  EXPECT_EQ(configuration.MessageSubject(), "Secret Santa Gift Exchange 2023");
-  EXPECT_FALSE(configuration.MessageBody().empty());
-  EXPECT_EQ(configuration.Participants().size(), 3);
+YAML::Node CreateSampleParticipantA() {
+  YAML::Node node;
+  node["Alice Smith"]["email"] = "alice.smith@gmail.com";
+  node["Alice Smith"]["address"] =
+      "123 First Ave, Apt 1, Townsville, CA 91234 USA";
+  node["Alice Smith"]["instructions"] =
+      "Leave the package with the doorman in the lobby.";
+  return node;
 }
 
-TEST(Configuration, DefaultConstructor) {
-  const Configuration configuration;
-  EXPECT_EQ(configuration.MessageSubject(), "Secret Santa Gift Exchange");
-  EXPECT_EQ(configuration.MessageBody(),
-            "Hello!\n\n"
-            "You are receiving this message because you opted to participate "
-            "in a Secret Santa gift exchange!");
+YAML::Node CreateSampleParticipantB() {
+  YAML::Node node;
+  node["Bob Johnson"]["email"] = "bob.johnson@gmail.com";
+  node["Bob Johnson"]["address"] =
+      "456 Second St, Apt 2, Villagetown, CA 92345 USA";
+  return node;
 }
 
-}  // namespace
+YAML::Node CreateSampleParticipantC() {
+  YAML::Node node;
+  node["Claire Jones"]["email"] = "claire.jones@gmail.com";
+  node["Claire Jones"]["address"] = "789 Third Rd, Villageburg, CA 93456 USA";
+  node["Claire Jones"]["instructions"] = "Hide the package behind the bushes.";
+  return node;
+}
 
 }  // namespace SecretSanta
+
+#endif  // SECRET_SANTA_CREATE_SAMPLE_PARTICIPANT_HPP

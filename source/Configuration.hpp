@@ -28,7 +28,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include <filesystem>
-#include <map>
+#include <set>
 
 #include "Participant.hpp"
 
@@ -45,14 +45,14 @@ public:
   // configuration file.
   Configuration(const std::filesystem::path& path) {
     if (!std::filesystem::exists(path)) {
-      std::cout << "The YAML configuration file at " << path << " is not found."
-                << std::endl;
+      std::cout << "Cannot find the YAML configuration file at " << path
+                << "; please check the file path." << std::endl;
       return;
     }
 
     YAML::Node root = YAML::LoadFile(path.string());
     if (!root) {
-      std::cout << "Could not parse the YAML configuration file at " << path
+      std::cout << "Cannot parse the YAML configuration file at " << path
                 << "; please check that it is a valid YAML file." << std::endl;
       return;
     }
@@ -87,8 +87,7 @@ public:
     YAML::Node participants = root["participants"];
     if (participants) {
       for (const YAML::iterator::value_type& participant_node : participants) {
-        Participant participant{participant_node};
-        participants_.emplace(participant.Name(), participant);
+        participants_.emplace(participant_node);
       }
     }
 
@@ -99,12 +98,26 @@ public:
       std::cout << "A total of " << participants_.size()
                 << " participants were found. They are:" << std::endl;
 
-      for (const std::pair<const std::string, Participant>& participant :
-           participants_) {
-        std::cout << "- " << participant.second << std::endl;
+      for (const Participant& participant : participants_) {
+        std::cout << "- " << participant << std::endl;
       }
     }
   }
+
+  // Destructor. Destroys this configuration object.
+  ~Configuration() noexcept = default;
+
+  // Deleted copy constructor.
+  Configuration(const Configuration& other) = delete;
+
+  // Deleted move constructor.
+  Configuration(Configuration&& other) noexcept = delete;
+
+  // Deleted copy assignment operator.
+  Configuration& operator=(const Configuration& other) = delete;
+
+  // Deleted move assignment operator.
+  Configuration& operator=(Configuration&& other) noexcept = delete;
 
   // Subject of the email message that will be sent to each participant. A
   // default value is used if no message subject is defined in the YAML
@@ -121,8 +134,8 @@ public:
     return message_body_;
   }
 
-  // Map of participant names to their information.
-  const std::map<std::string, Participant>& Participants() const noexcept {
+  // Set of participants.
+  const std::set<Participant>& Participants() const noexcept {
     return participants_;
   }
 
@@ -141,8 +154,8 @@ private:
       "You are receiving this message because you opted to participate in a "
       "Secret Santa gift exchange!"};
 
-  // Map of participant names to their information.
-  std::map<std::string, Participant> participants_;
+  // Set of participants.
+  std::set<Participant> participants_;
 };
 
 }  // namespace SecretSanta

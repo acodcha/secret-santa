@@ -93,6 +93,10 @@ if(TEST_SECRET_SANTA)
   target_link_libraries(configuration yaml-cpp GTest::gtest_main)
   gtest_discover_tests(configuration)
 
+  add_executable(matchings ${PROJECT_SOURCE_DIR}/test/Matchings.cpp)
+  target_link_libraries(matchings yaml-cpp GTest::gtest_main)
+  gtest_discover_tests(matchings)
+
   add_executable(messenger_settings ${PROJECT_SOURCE_DIR}/test/Messenger/Settings.cpp)
   target_link_libraries(messenger_settings yaml-cpp GTest::gtest_main)
   gtest_discover_tests(messenger_settings)

@@ -22,6 +22,9 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
+#ifndef SECRET_SANTA_PARTICIPANT_HPP
+#define SECRET_SANTA_PARTICIPANT_HPP
+
 #include <yaml-cpp/yaml.h>
 
 #include <iostream>
@@ -207,3 +210,5 @@ struct hash<SecretSanta::Participant> {
 };
 
 }  // namespace std
+
+#endif  // SECRET_SANTA_PARTICIPANT_HPP
