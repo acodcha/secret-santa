@@ -26,6 +26,7 @@
 
 #include "../Configuration.hpp"
 #include "../Matchings.hpp"
+#include "Emailer.hpp"
 #include "Settings.hpp"
 
 int main(int argc, char* argv[]) {
@@ -35,7 +36,7 @@ int main(int argc, char* argv[]) {
 
   const SecretSanta::Matchings matchings{settings.MatchingsFile()};
 
-  // const SecretSanta::Emailer emailer{configuration, matchings};
+  SecretSanta::Messenger::SendEmailMessages(configuration, matchings);
 
   std::cout << "End of " << SecretSanta::Messenger::Program::Title << "."
             << std::endl;

@@ -22,27 +22,46 @@
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
-#ifndef SECRET_SANTA_RANDOMIZER_PROGRAM_HPP
-#define SECRET_SANTA_RANDOMIZER_PROGRAM_HPP
+#include "../../source/Messenger/Emailer.hpp"
 
-#include <string>
+#include <gtest/gtest.h>
 
-namespace SecretSanta::Randomizer::Program {
+#include "../CreateSampleParticipant.hpp"
 
-// Title of the Secret Santa Randomizer program.
-static const std::string Title{"Secret Santa Randomizer"};
+namespace SecretSanta::Messenger {
 
-// Date and time at which the Secret Santa Randomizer program was compiled.
-static const std::string CompilationDateAndTime{
-    std::string{__DATE__} + ", " + std::string{__TIME__}};
+namespace {
 
-// Description of the Secret Santa Randomizer program.
-static const std::string Description{
-    "  Organizes a Secret Santa gift exchange event! Reads a YAML\n"
-    "  configuration file containing a list of participants,\n"
-    "  randomly generates Secret Santa matchings among the\n"
-    "  participants, and outputs the matchings to a YAML file."};
+TEST(MessengerEmailer, CreateFullMessageBody) {
+  const Participant gifter = CreateSampleParticipantA();
+  const Participant giftee = CreateSampleParticipantB();
 
-}  // namespace SecretSanta::Randomizer::Program
+  const std::string main_message_body{
+      "You are receiving this message because you opted to participate in a "
+      "Secret Santa gift exchange!"};
 
-#endif  // SECRET_SANTA_RANDOMIZER_PROGRAM_HPP
+  const std::string result =
+      CreateFullMessageBody(gifter, giftee, main_message_body);
+
+  EXPECT_EQ(result,
+            "Hello Alice Smith,\n\nYou are receiving this message because you "
+            "opted to participate in a Secret Santa gift exchange!\n\nYour "
+            "giftee is:\n\nBob Johnson\n456 Second St, Apt 2, Villagetown, CA "
+            "92345 USA\n\nThank you!");
+}
+
+TEST(MessengerEmailer, CreateCommand) {
+  const Participant gifter = CreateSampleParticipantA();
+  const std::string message_subject{"My Message Subject"};
+  const std::string message_body{"My Message Body"};
+
+  std::string command = CreateCommand(gifter, message_subject, message_body);
+
+  EXPECT_EQ(command,
+            "echo \"My Message Body\" | s-nail --subject \"My Message "
+            "Subject\" alice.smith@gmail.com");
+}
+
+}  // namespace
+
+}  // namespace SecretSanta::Messenger

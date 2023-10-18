@@ -89,29 +89,33 @@ if(TEST_SECRET_SANTA)
 
   # Define the Secret Santa test executables.
 
-  add_executable(configuration ${PROJECT_SOURCE_DIR}/test/Configuration.cpp)
-  target_link_libraries(configuration yaml-cpp GTest::gtest_main)
-  gtest_discover_tests(configuration)
+  add_executable(test_configuration ${PROJECT_SOURCE_DIR}/test/Configuration.cpp)
+  target_link_libraries(test_configuration yaml-cpp GTest::gtest_main)
+  gtest_discover_tests(test_configuration)
 
-  add_executable(matchings ${PROJECT_SOURCE_DIR}/test/Matchings.cpp)
-  target_link_libraries(matchings yaml-cpp GTest::gtest_main)
-  gtest_discover_tests(matchings)
+  add_executable(test_matchings ${PROJECT_SOURCE_DIR}/test/Matchings.cpp)
+  target_link_libraries(test_matchings yaml-cpp GTest::gtest_main)
+  gtest_discover_tests(test_matchings)
 
-  add_executable(messenger_settings ${PROJECT_SOURCE_DIR}/test/Messenger/Settings.cpp)
-  target_link_libraries(messenger_settings yaml-cpp GTest::gtest_main)
-  gtest_discover_tests(messenger_settings)
+  add_executable(test_messenger_emailer ${PROJECT_SOURCE_DIR}/test/Messenger/Emailer.cpp)
+  target_link_libraries(test_messenger_emailer yaml-cpp GTest::gtest_main)
+  gtest_discover_tests(test_messenger_emailer)
 
-  add_executable(participant ${PROJECT_SOURCE_DIR}/test/Participant.cpp)
-  target_link_libraries(participant yaml-cpp GTest::gtest_main)
-  gtest_discover_tests(participant)
+  add_executable(test_messenger_settings ${PROJECT_SOURCE_DIR}/test/Messenger/Settings.cpp)
+  target_link_libraries(test_messenger_settings yaml-cpp GTest::gtest_main)
+  gtest_discover_tests(test_messenger_settings)
 
-  add_executable(randomizer_settings ${PROJECT_SOURCE_DIR}/test/Randomizer/Settings.cpp)
-  target_link_libraries(randomizer_settings yaml-cpp GTest::gtest_main)
-  gtest_discover_tests(randomizer_settings)
+  add_executable(test_participant ${PROJECT_SOURCE_DIR}/test/Participant.cpp)
+  target_link_libraries(test_participant yaml-cpp GTest::gtest_main)
+  gtest_discover_tests(test_participant)
 
-  add_executable(string ${PROJECT_SOURCE_DIR}/test/String.cpp)
-  target_link_libraries(string yaml-cpp GTest::gtest_main)
-  gtest_discover_tests(string)
+  add_executable(test_randomizer_settings ${PROJECT_SOURCE_DIR}/test/Randomizer/Settings.cpp)
+  target_link_libraries(test_randomizer_settings yaml-cpp GTest::gtest_main)
+  gtest_discover_tests(test_randomizer_settings)
+
+  add_executable(test_string ${PROJECT_SOURCE_DIR}/test/String.cpp)
+  target_link_libraries(test_string yaml-cpp GTest::gtest_main)
+  gtest_discover_tests(test_string)
 
   message(STATUS "The Secret Santa tests were configured. Build the tests with \"make --jobs=16\" and run them with \"make test\"")
 else()

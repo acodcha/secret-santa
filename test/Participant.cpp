@@ -45,7 +45,15 @@ TEST(Participant, ComparisonOperators) {
   EXPECT_GE(second, first);
 }
 
-TEST(Participant, Constructor) {
+TEST(Participant, ConstructorFromName) {
+  const Participant participant{"Alice Smith"};
+  EXPECT_EQ(participant.Name(), "Alice Smith");
+  EXPECT_TRUE(participant.Email().empty());
+  EXPECT_TRUE(participant.Address().empty());
+  EXPECT_TRUE(participant.Instructions().empty());
+}
+
+TEST(Participant, ConstructorFromYamlNode) {
   const Participant participant{CreateSampleParticipantA()};
   EXPECT_EQ(participant.Name(), "Alice Smith");
   EXPECT_EQ(participant.Email(), "alice.smith@gmail.com");
