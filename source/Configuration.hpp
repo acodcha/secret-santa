@@ -122,15 +122,16 @@ public:
   // Subject of the email message that will be sent to each participant. A
   // default value is used if no message subject is defined in the YAML
   // configuration file.
-  std::string_view MessageSubject() const noexcept {
+  const std::string& MessageSubject() const noexcept {
     return message_subject_;
   }
 
   // Body of the email message that will be sent to each participant. A default
   // value is used if no message body is defined in the YAML configuration file.
-  // Information regarding the participant's giftee is automatically appended to
-  // this body.
-  std::string_view MessageBody() const noexcept {
+  // A brief greeting of "Hello <name>" is automatically prepended to this body,
+  // and information regarding the participant's giftee is automatically
+  // appended to this body.
+  const std::string& MessageBody() const noexcept {
     return message_body_;
   }
 
@@ -147,10 +148,10 @@ private:
 
   // Body of the email message that will be sent to each participant. A default
   // value is used if no message body is defined in the YAML configuration file.
-  // Information regarding the participant's giftee is automatically appended to
-  // this body.
+  // A brief greeting of "Hello <name>" is automatically prepended to this body,
+  // and information regarding the participant's giftee is automatically
+  // appended to this body.
   std::string message_body_{
-      "Hello!\n\n"
       "You are receiving this message because you opted to participate in a "
       "Secret Santa gift exchange!"};
 

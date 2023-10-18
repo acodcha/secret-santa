@@ -43,7 +43,7 @@ namespace SecretSanta {
 // Matchings between gifters and giftees.
 class Matchings {
 public:
-  // Default constructor.
+  // Default constructor. Constructs an empty set of matchings.
   Matchings() = default;
 
   // Constructor. Constructs matchings given a set of participants and an
@@ -113,9 +113,10 @@ public:
       }
     }
 
-    std::cout << "Read the matchings between gifters and giftees from the YAML "
-                 "file at: "
-              << path << std::endl;
+    std::cout
+        << "Read " << gifters_to_giftees_.size()
+        << " matchings between gifters and giftees from the YAML file at: "
+        << path << std::endl;
   }
 
   // Destructor. Destroys this matchings object.

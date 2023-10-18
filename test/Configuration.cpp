@@ -41,7 +41,6 @@ TEST(Configuration, DefaultConstructor) {
   const Configuration configuration;
   EXPECT_EQ(configuration.MessageSubject(), "Secret Santa Gift Exchange");
   EXPECT_EQ(configuration.MessageBody(),
-            "Hello!\n\n"
             "You are receiving this message because you opted to participate "
             "in a Secret Santa gift exchange!");
 }

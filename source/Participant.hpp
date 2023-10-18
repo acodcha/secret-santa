@@ -29,7 +29,6 @@
 
 #include <iostream>
 #include <string>
-#include <string_view>
 
 namespace SecretSanta {
 
@@ -40,6 +39,11 @@ public:
   // Default constructor. Creates a participant with an empty name, email,
   // address, and instructions.
   Participant() = default;
+
+  // Constructor. Creates a participant from a given name. The email address,
+  // street address, and instructions are empty. Only used for searching through
+  // a set of participants.
+  Participant(const std::string& name) : name_(name) {}
 
   // Constructor. Creates a participant from a YAML node of the form:
   //   Alice Smith:
@@ -92,22 +96,22 @@ public:
   Participant& operator=(Participant&& other) noexcept = default;
 
   // Name of this participant. Each participant must have a unique name.
-  std::string_view Name() const noexcept {
+  const std::string& Name() const noexcept {
     return name_;
   }
 
   // Email address of this participant.
-  std::string_view Email() const noexcept {
+  const std::string& Email() const noexcept {
     return email_;
   }
 
-  // Civic address of this participant.
-  std::string_view Address() const noexcept {
+  // Street address of this participant.
+  const std::string& Address() const noexcept {
     return address_;
   }
 
   // Additional instructions for mailing packages to this participant.
-  std::string_view Instructions() const noexcept {
+  const std::string& Instructions() const noexcept {
     return instructions_;
   }
 
@@ -185,7 +189,7 @@ private:
   // Email address of this participant.
   std::string email_;
 
-  // Civic address of this participant.
+  // Street address of this participant.
   std::string address_;
 
   // Additional instructions for mailing packages to this participant.
