@@ -132,7 +132,7 @@ participants:
   [...]
 ```
 
-The YAML configuration file defines the following fields:
+The fields are:
 
 - `message->subject`: Subject of the email message that will be sent to each participant. A default value is used if no message subject is defined in the YAML configuration file.
 - `message->body`: Body of the email message that will be sent to each participant. A default value is used if no message body is defined in the YAML configuration file. Information regarding the participant's giftee is automatically appended to this body.
@@ -166,7 +166,19 @@ The command-line arguments are:
 
 ### Usage: Matchings File
 
-TODO.
+A sample YAML matchings file is shown here: [test/matchings.yaml](test/matchings.yaml)
+
+The YAML matchings file must follow the following schema:
+
+```yaml
+---
+gifters_to_giftees:
+  - <gifter-name>: <giftee-name>
+  - <gifter-name>: <giftee-name>
+  [...]
+```
+
+The `gifters_to_giftees` sequence lists the names of the matchings of gifters and giftees.
 
 [(Back to Usage)](#usage)
 

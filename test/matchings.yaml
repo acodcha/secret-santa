@@ -1,0 +1,5 @@
+---
+gifters_to_giftees:
+  - Alice Smith: Claire Jones
+  - Bob Johnson: Alice Smith
+  - Claire Jones: Bob Johnson
