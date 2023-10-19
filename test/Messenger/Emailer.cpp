@@ -32,7 +32,7 @@ namespace SecretSanta::Messenger {
 
 namespace {
 
-TEST(MessengerEmailer, CreateFullMessageBody) {
+TEST(MessengerEmailer, ComposeFullMessageBody) {
   const Participant gifter = CreateSampleParticipantA();
   const Participant giftee = CreateSampleParticipantB();
 
@@ -41,7 +41,7 @@ TEST(MessengerEmailer, CreateFullMessageBody) {
       "Secret Santa gift exchange!"};
 
   const std::string result =
-      CreateFullMessageBody(gifter, giftee, main_message_body);
+      ComposeFullMessageBody(gifter, giftee, main_message_body);
 
   EXPECT_EQ(result,
             "Hello Alice Smith,\n\nYou are receiving this message because you "
@@ -50,12 +50,12 @@ TEST(MessengerEmailer, CreateFullMessageBody) {
             "92345 USA\n\nThank you!");
 }
 
-TEST(MessengerEmailer, CreateCommand) {
+TEST(MessengerEmailer, ComposeCommand) {
   const Participant gifter = CreateSampleParticipantA();
   const std::string message_subject{"My Message Subject"};
   const std::string message_body{"My Message Body"};
 
-  std::string command = CreateCommand(gifter, message_subject, message_body);
+  std::string command = ComposeCommand(gifter, message_subject, message_body);
 
   EXPECT_EQ(command,
             "echo \"My Message Body\" | s-nail --subject \"My Message "

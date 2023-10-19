@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
 
   const SecretSanta::Matchings matchings{settings.MatchingsFile()};
 
-  SecretSanta::Messenger::SendEmailMessages(configuration, matchings);
+  SecretSanta::Messenger::ComposeAndSendEmailMessages(configuration, matchings);
 
   std::cout << "End of " << SecretSanta::Messenger::Program::Title << "."
             << std::endl;

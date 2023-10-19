@@ -30,7 +30,9 @@
 
 namespace SecretSanta::Messenger {
 
-std::string CreateFullMessageBody(
+// Composes the full email message body for a given gifter. Prefixes a brief
+// greeting to the given main message body and appends the giftee information.
+std::string ComposeFullMessageBody(
     const Participant& gifter, const Participant& giftee,
     const std::string& main_message_body) {
   std::string text;
@@ -41,7 +43,9 @@ std::string CreateFullMessageBody(
 
   text.append("Your giftee is:\n\n");
   text.append(giftee.Name() + "\n");
-  text.append(giftee.Address() + "\n");
+  if (!giftee.Address().empty()) {
+    text.append(giftee.Address() + "\n");
+  }
   if (!giftee.Instructions().empty()) {
     text.append("Special Instructions: " + giftee.Instructions() + "\n");
   }
@@ -50,21 +54,24 @@ std::string CreateFullMessageBody(
   return text;
 }
 
-std::string CreateCommand(
+// Composes the command used to invoke the S-nail utility for a given gifter.
+std::string ComposeCommand(
     const Participant& gifter, const std::string& message_subject,
     const std::string& message_body) {
   return "echo \"" + message_body + "\" | s-nail --subject \"" + message_subject
          + "\" " + gifter.Email();
 }
 
-void SendEmailMessage(
+// Composes and sends an email message to a given gifter. Creates the full body
+// of the message and sends it using the S-nail utility.
+void ComposeAndSendEmailMessage(
     const Participant& gifter, const Participant& giftee,
     const std::string& message_subject, const std::string& main_message_body) {
   const std::string full_message_body =
-      CreateFullMessageBody(gifter, giftee, main_message_body);
+      ComposeFullMessageBody(gifter, giftee, main_message_body);
 
   const std::string command{
-      CreateCommand(gifter, message_subject, full_message_body)};
+      ComposeCommand(gifter, message_subject, full_message_body)};
 
   const int outcome{std::system(command.c_str())};
 
@@ -76,9 +83,11 @@ void SendEmailMessage(
   }
 }
 
-void SendEmailMessages(
+// Composes and sends email messages to all gifters.
+void ComposeAndSendEmailMessages(
     const Configuration& configuration, const Matchings& matchings) {
   for (const Participant& gifter : configuration.Participants()) {
+    // Obtain the gifter and giftee names.
     const std::map<std::string, std::string>::const_iterator
         gifter_name_and_giftee_name =
             matchings.GiftersToGiftees().find(gifter.Name());
@@ -87,6 +96,7 @@ void SendEmailMessages(
       continue;
     }
 
+    // Obtain the giftee information.
     const std::set<Participant>::const_iterator giftee =
         configuration.Participants().find(
             {gifter_name_and_giftee_name->second});
@@ -95,8 +105,9 @@ void SendEmailMessages(
       continue;
     }
 
-    SendEmailMessage(gifter, *giftee, configuration.MessageSubject(),
-                     configuration.MessageBody());
+    // Compose and send the email message to this gifter.
+    ComposeAndSendEmailMessage(gifter, *giftee, configuration.MessageSubject(),
+                               configuration.MessageBody());
   }
 }
 
