@@ -57,28 +57,35 @@ public:
       random_generator.seed(random_seed.value());
     }
 
-    // Initialize the giftees.
-    std::vector<std::string> giftees(participants.size());
+    // Obtain the participant names.
+    std::vector<std::string> participant_names(participants.size());
     {
       std::size_t index = 0;
       for (const Participant& participant : participants) {
-        giftees[index] = participant.Name();
+        participant_names[index] = participant.Name();
         ++index;
       }
     }
 
-    // Shuffle the giftees.
-    do {
-      std::shuffle(giftees.begin(), giftees.end(), random_generator);
-    } while (!IsValid(participants, giftees));
+    // Shuffle the participant names.
+    std::shuffle(
+        participant_names.begin(), participant_names.end(), random_generator);
 
-    // Store the gifters and giftees.
-    {
-      std::size_t index = 0;
-      for (const Participant& participant : participants) {
-        gifters_to_giftees_.emplace(participant.Name(), giftees[index]);
-        ++index;
-      }
+    // Create the matchings between gifters and giftees. Each participant in the
+    // shuffled sequence is a gifter, and their giftee is the next participant
+    // in the shuffled sequence. This results in one large cyclic list rather
+    // than a graph and guarantees that gifters cannot be their own giftees. For
+    // example, consider the sequence [Alice, Bob, Claire, David]. After
+    // shuffling, suppose this sequence is [Claire, Bob, David, Alice]. The
+    // matchings are thus: Claire->Bob, Bob->David, David->Alice, and
+    // Alice->Claire.
+    for (std::size_t gifter_index = 0; gifter_index < participant_names.size();
+         ++gifter_index) {
+      const std::size_t giftee_index =
+          gifter_index + 1 < participant_names.size() ? gifter_index + 1 : 0;
+
+      gifters_to_giftees_.emplace(
+          participant_names[gifter_index], participant_names[giftee_index]);
     }
 
     std::cout
@@ -220,25 +227,6 @@ public:
   }
 
 private:
-  // Checks whether the assignment of gifters and giftees is valid. To be valid,
-  // no gifter must be assigned themselves as their giftee.
-  bool IsValid(const std::set<Participant>& gifters,
-               const std::vector<std::string>& giftees) const {
-    if (gifters.size() <= 1) {
-      return true;
-    }
-
-    std::size_t index = 0;
-    for (const Participant& gifter : gifters) {
-      if (index >= giftees.size() || gifter.Name() == giftees[index]) {
-        return false;
-      }
-      ++index;
-    }
-
-    return true;
-  }
-
   // Map of gifter participant names to giftee participant names. For example,
   // the map element {Alice, Bob} means that Alice is the gifter and Bob is the
   // giftee, such that Alice is Bob's Secret Santa.

@@ -61,6 +61,9 @@ TEST(Matchings, ConstructorFromNoParticipants) {
 TEST(Matchings, ConstructorFromOneParticipant) {
   const Matchings matchings{{CreateSampleParticipantA()}};
   EXPECT_EQ(matchings.GiftersToGiftees().size(), 1);
+  EXPECT_NE(matchings.GiftersToGiftees().find("Alice Smith"),
+            matchings.GiftersToGiftees().cend());
+  EXPECT_EQ(matchings.GiftersToGiftees().at("Alice Smith"), "Alice Smith");
 }
 
 TEST(Matchings, ConstructorFromThreeParticipants) {
