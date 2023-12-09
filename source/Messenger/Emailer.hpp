@@ -41,8 +41,10 @@ std::string ComposeFullMessageBody(
 
   text.append(main_message_body + "\n\n");
 
-  text.append("Your giftee is:\n\n");
-  text.append(giftee.Name() + "\n");
+  text.append("Your giftee is: " + giftee.Name() + "\n\n");
+
+  text.append("Mail to:\n\n");
+  text.append(giftee.Name() + " SECRET SANTA\n");
   if (!giftee.Address().empty()) {
     text.append(giftee.Address() + "\n");
   }
