@@ -46,8 +46,9 @@ TEST(MessengerEmailer, ComposeFullMessageBody) {
   EXPECT_EQ(result,
             "Hello Alice Smith,\n\nYou are receiving this message because you "
             "opted to participate in a Secret Santa gift exchange!\n\nYour "
-            "giftee is:\n\nBob Johnson\n456 Second St, Apt 2, Villagetown, CA "
-            "92345 USA\n\nThank you!");
+            "giftee is: Bob Johnson\n\nMail to:\n\nBob Johnson SECRET "
+            "SANTA\n456 Second St, Apt 2, Villagetown, CA 92345 USA\n\nThank "
+            "you!");
 }
 
 TEST(MessengerEmailer, ComposeCommand) {
