@@ -1,23 +1,20 @@
-// Copyright © 2023 Alexandre Coderre-Chabot
+// Copyright © 2023-2024 Alexandre Coderre-Chabot
 //
 // This file is licensed under the MIT license. For more information, visit:
 //     https://mit-license.org
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-//   - The above copyright notice and this permission notice shall be included
-//     in all copies or substantial portions of the Software.
-//   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-//     OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-//     MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-//     NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-//     DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-//     OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-//     USE OR OTHER DEALINGS IN THE SOFTWARE.
+//   - The above copyright notice and this permission notice shall be included in all copies or
+//   substantial portions of the Software.
+//   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+//   BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
@@ -57,15 +54,13 @@ TEST(Participant, ConstructorFromYamlNode) {
   const Participant participant{CreateSampleParticipantA()};
   EXPECT_EQ(participant.Name(), "Alice Smith");
   EXPECT_EQ(participant.Email(), "alice.smith@gmail.com");
-  EXPECT_EQ(
-      participant.Address(), "123 First Ave, Apt 1, Townsville, CA 91234 USA");
-  EXPECT_EQ(participant.Instructions(),
-            "Leave the package with the doorman in the lobby.");
+  EXPECT_EQ(participant.Address(), "123 First Ave, Apt 1, Townsville, CA 91234 USA");
+  EXPECT_EQ(participant.Instructions(), "Leave the package with the doorman in the lobby.");
 }
 
 TEST(Participant, CopyAssignmentOperator) {
   const Participant first{CreateSampleParticipantA()};
-  Participant second = CreateSampleParticipantB();
+  Participant second = Participant{CreateSampleParticipantB()};
   second = first;
   EXPECT_EQ(second, first);
 }
@@ -93,7 +88,7 @@ TEST(Participant, Hash) {
 
 TEST(Participant, MoveAssignmentOperator) {
   Participant first{CreateSampleParticipantA()};
-  Participant second = CreateSampleParticipantB();
+  Participant second{CreateSampleParticipantB()};
   second = std::move(first);
   EXPECT_EQ(second, Participant(CreateSampleParticipantA()));
 }
@@ -107,9 +102,8 @@ TEST(Participant, MoveConstructor) {
 TEST(Participant, Print) {
   const Participant participant{CreateSampleParticipantA()};
   EXPECT_EQ(participant.Print(),
-            "Alice Smith (email: alice.smith@gmail.com; address: 123 First "
-            "Ave, Apt 1, Townsville, CA 91234 USA; instructions: Leave the "
-            "package with the doorman in the lobby.)");
+            "Alice Smith (email: alice.smith@gmail.com; address: 123 First Ave, Apt 1, Townsville, "
+            "CA 91234 USA; instructions: Leave the package with the doorman in the lobby.)");
 }
 
 TEST(Participant, Stream) {
@@ -117,21 +111,19 @@ TEST(Participant, Stream) {
   std::stringstream stream;
   stream << participant;
   EXPECT_EQ(stream.str(),
-            "Alice Smith (email: alice.smith@gmail.com; address: 123 First "
-            "Ave, Apt 1, Townsville, CA 91234 USA; instructions: Leave the "
-            "package with the doorman in the lobby.)");
+            "Alice Smith (email: alice.smith@gmail.com; address: 123 First Ave, Apt 1, Townsville, "
+            "CA 91234 USA; instructions: Leave the package with the doorman in the lobby.)");
 }
 
 TEST(Participant, YAML) {
   const Participant participant{CreateSampleParticipantA()};
-  const YAML::Node node = participant.YAML();
+  const YAML::Node node{participant.YAML()};
   ASSERT_TRUE(node.IsMap());
   ASSERT_EQ(node.size(), 1);
   for (const YAML::detail::iterator_value& element : node) {
     ASSERT_EQ(element.first.as<std::string>(), "Alice Smith");
     ASSERT_TRUE(element.second["email"]);
-    ASSERT_EQ(
-        element.second["email"].as<std::string>(), "alice.smith@gmail.com");
+    ASSERT_EQ(element.second["email"].as<std::string>(), "alice.smith@gmail.com");
     ASSERT_TRUE(element.second["address"]);
     ASSERT_EQ(element.second["address"].as<std::string>(),
               "123 First Ave, Apt 1, Townsville, CA 91234 USA");

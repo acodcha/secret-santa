@@ -1,23 +1,20 @@
-// Copyright © 2023 Alexandre Coderre-Chabot
+// Copyright © 2023-2024 Alexandre Coderre-Chabot
 //
 // This file is licensed under the MIT license. For more information, visit:
 //     https://mit-license.org
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-//   - The above copyright notice and this permission notice shall be included
-//     in all copies or substantial portions of the Software.
-//   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-//     OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-//     MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-//     NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-//     DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-//     OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-//     USE OR OTHER DEALINGS IN THE SOFTWARE.
+//   - The above copyright notice and this permission notice shall be included in all copies or
+//   substantial portions of the Software.
+//   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+//   BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
@@ -67,12 +64,12 @@ public:
   Settings& operator=(Settings&& other) noexcept = delete;
 
   // Path to the YAML configuration file to be read.
-  const std::filesystem::path& ConfigurationFile() const noexcept {
+  [[nodiscard]] const std::filesystem::path& ConfigurationFile() const noexcept {
     return configuration_file_;
   }
 
   // Path to the YAML matchings file to be read.
-  const std::filesystem::path& MatchingsFile() const noexcept {
+  [[nodiscard]] const std::filesystem::path& MatchingsFile() const noexcept {
     return matchings_file_;
   }
 
@@ -90,8 +87,8 @@ private:
 
     std::cout << "Usage:" << std::endl;
 
-    std::cout << indent << executable_name_ << " " << Argument::Configuration()
-              << " " << Argument::Matchings() << std::endl;
+    std::cout << indent << executable_name_ << " " << Argument::Configuration() << " "
+              << Argument::Matchings() << std::endl;
 
     // Compute the padding length of the argument patterns.
     const std::size_t length = std::max({
@@ -105,14 +102,11 @@ private:
     std::cout << indent << PadToLength(Argument::Help(), length) << indent
               << "Displays this information and exits." << std::endl;
 
-    std::cout
-        << indent << PadToLength(Argument::Configuration(), length) << indent
-        << "Path to the YAML configuration file to be read. Required."
-        << std::endl;
+    std::cout << indent << PadToLength(Argument::Configuration(), length) << indent
+              << "Path to the YAML configuration file to be read. Required." << std::endl;
 
     std::cout << indent << PadToLength(Argument::Matchings(), length) << indent
-              << "Path to the YAML matchings file to be written. Optional."
-              << std::endl;
+              << "Path to the YAML matchings file to be written. Optional." << std::endl;
   }
 
   // Parses the program's command-line arguments.
@@ -132,12 +126,10 @@ private:
         PrintHeader();
         PrintUsage();
         exit(EXIT_SUCCESS);
-      } else if (argv[index] == Argument::Key::Configuration
-                 && AtLeastOneMore(index, argc)) {
+      } else if (argv[index] == Argument::Key::Configuration && AtLeastOneMore(index, argc)) {
         configuration_file_ = argv[index + 1];
         index += 2;
-      } else if (argv[index] == Argument::Key::Matchings
-                 && AtLeastOneMore(index, argc)) {
+      } else if (argv[index] == Argument::Key::Matchings && AtLeastOneMore(index, argc)) {
         matchings_file_ = argv[index + 1];
         index += 2;
       } else {
@@ -149,28 +141,23 @@ private:
     }
   }
 
-  // Returns whether there is at least one more element after the given element
-  // index.
-  bool AtLeastOneMore(const int index, const int count) const noexcept {
+  // Returns whether there is at least one more element after the given element index.
+  [[nodiscard]] bool AtLeastOneMore(const int index, const int count) const noexcept {
     return index + 1 < count;
   }
 
   // Prints the command to the console.
   void PrintCommand() const {
-    std::cout
-        << "Command: " << executable_name_ << " "
-        << Argument::Key::Configuration << " " << configuration_file_ << " "
-        << Argument::Key::Matchings + " " + matchings_file_.string()
-        << std::endl;
+    std::cout << "Command: " << executable_name_ << " " << Argument::Key::Configuration << " "
+              << configuration_file_ << " "
+              << Argument::Key::Matchings + " " + matchings_file_.string() << std::endl;
   }
 
   // Prints the settings to the console.
   void PrintSettings() const {
-    std::cout << "- The configuration will be read from: "
-              << configuration_file_ << std::endl;
+    std::cout << "- The configuration will be read from: " << configuration_file_ << std::endl;
 
-    std::cout << "- The matchings will be read from: " << matchings_file_
-              << std::endl;
+    std::cout << "- The matchings will be read from: " << matchings_file_ << std::endl;
   }
 
   // Name of the Secret Santa Messenger executable.
