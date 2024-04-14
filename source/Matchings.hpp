@@ -1,31 +1,26 @@
-// Copyright © 2023 Alexandre Coderre-Chabot
+// Copyright © 2023-2024 Alexandre Coderre-Chabot
 //
 // This file is licensed under the MIT license. For more information, visit:
 //     https://mit-license.org
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-//   - The above copyright notice and this permission notice shall be included
-//     in all copies or substantial portions of the Software.
-//   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-//     OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-//     MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-//     NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-//     DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-//     OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-//     USE OR OTHER DEALINGS IN THE SOFTWARE.
+//   - The above copyright notice and this permission notice shall be included in all copies or
+//   substantial portions of the Software.
+//   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+//   BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
 
 #ifndef SECRET_SANTA_MATCHINGS_HPP
 #define SECRET_SANTA_MATCHINGS_HPP
-
-#include <yaml-cpp/yaml.h>
 
 #include <filesystem>
 #include <fstream>
@@ -35,6 +30,7 @@
 #include <random>
 #include <string>
 #include <vector>
+#include <yaml-cpp/yaml.h>
 
 #include "Participant.hpp"
 
@@ -46,8 +42,8 @@ public:
   // Default constructor. Constructs an empty set of matchings.
   Matchings() = default;
 
-  // Constructor. Constructs matchings given a set of participants and an
-  // optional random seed. Ensures that the matchings are valid.
+  // Constructor. Constructs matchings given a set of participants and an optional random seed.
+  // Ensures that the matchings are valid.
   Matchings(const std::set<Participant>& participants,
             const std::optional<int64_t>& random_seed = std::nullopt) {
     // Initialize the random generator.
@@ -68,28 +64,22 @@ public:
     }
 
     // Shuffle the participant names.
-    std::shuffle(
-        participant_names.begin(), participant_names.end(), random_generator);
+    std::shuffle(participant_names.begin(), participant_names.end(), random_generator);
 
-    // Create the matchings between gifters and giftees. Each participant in the
-    // shuffled sequence is a gifter, and their giftee is the next participant
-    // in the shuffled sequence. This results in one large cyclic list rather
-    // than a graph and guarantees that gifters cannot be their own giftees. For
-    // example, consider the sequence [Alice, Bob, Claire, David]. After
-    // shuffling, suppose this sequence is [Claire, Bob, David, Alice]. The
-    // matchings are thus: Claire->Bob, Bob->David, David->Alice, and
-    // Alice->Claire.
-    for (std::size_t gifter_index = 0; gifter_index < participant_names.size();
-         ++gifter_index) {
+    // Create the matchings between gifters and giftees. Each participant in the shuffled sequence
+    // is a gifter, and their giftee is the next participant in the shuffled sequence. This results
+    // in one large cyclic list rather than a graph and guarantees that gifters cannot be their own
+    // giftees. For example, consider the sequence [Alice, Bob, Claire, David]. After shuffling,
+    // suppose this sequence is [Claire, Bob, David, Alice]. The matchings are thus: Claire->Bob,
+    // Bob->David, David->Alice, and Alice->Claire.
+    for (std::size_t gifter_index = 0; gifter_index < participant_names.size(); ++gifter_index) {
       const std::size_t giftee_index =
           gifter_index + 1 < participant_names.size() ? gifter_index + 1 : 0;
 
-      gifters_to_giftees_.emplace(
-          participant_names[gifter_index], participant_names[giftee_index]);
+      gifters_to_giftees_.emplace(participant_names[gifter_index], participant_names[giftee_index]);
     }
 
-    std::cout
-        << "Randomized the matchings between gifters and giftees." << std::endl;
+    std::cout << "Randomized the matchings between gifters and giftees." << std::endl;
   }
 
   // Constructor. Constructs matchings by reading them from a given YAML file.
@@ -113,17 +103,15 @@ public:
       for (YAML::iterator gifter_to_giftee = gifters_to_giftees.begin();
            gifter_to_giftee != gifters_to_giftees.end(); ++gifter_to_giftee) {
         if (gifter_to_giftee->size() == 1 && gifter_to_giftee->IsMap()) {
-          gifters_to_giftees_.emplace(
-              gifter_to_giftee->begin()->first.as<std::string>(),
-              gifter_to_giftee->begin()->second.as<std::string>());
+          gifters_to_giftees_.emplace(gifter_to_giftee->begin()->first.as<std::string>(),
+                                      gifter_to_giftee->begin()->second.as<std::string>());
         }
       }
     }
 
     std::cout
         << "Read " << gifters_to_giftees_.size()
-        << " matchings between gifters and giftees from the YAML file at: "
-        << path << std::endl;
+        << " matchings between gifters and giftees from the YAML file at: " << path << std::endl;
   }
 
   // Destructor. Destroys this matchings object.
@@ -141,9 +129,9 @@ public:
   // Deleted move assignment operator.
   Matchings& operator=(Matchings&& other) noexcept = delete;
 
-  // Map of gifter participant names to giftee participant names. For example,
-  // the map element {Alice, Bob} means that Alice is the gifter and Bob is the
-  // giftee, such that Alice is Bob's Secret Santa.
+  // Map of gifter participant names to giftee participant names. For example, the map element
+  // {Alice, Bob} means that Alice is the gifter and Bob is the giftee, such that Alice is Bob's
+  // Secret Santa.
   const std::map<std::string, std::string>& GiftersToGiftees() const noexcept {
     return gifters_to_giftees_;
   }
@@ -163,8 +151,8 @@ public:
     if (!path.empty()) {
       stream.open(path.string());
       if (!stream.is_open()) {
-        std::cout << "Could not open the YAML matchings file for writing at: "
-                  << path.string() << std::endl;
+        std::cout << "Could not open the YAML matchings file for writing at: " << path.string()
+                  << std::endl;
         return;
       }
     }
@@ -174,8 +162,7 @@ public:
     emitter << YAML::Key << "gifters_to_giftees";
     emitter << YAML::Value << YAML::BeginSeq;
 
-    for (const std::pair<const std::string, std::string>& gifter_and_giftee :
-         gifters_to_giftees_) {
+    for (const std::pair<const std::string, std::string>& gifter_and_giftee : gifters_to_giftees_) {
       YAML::Node node;
       node[gifter_and_giftee.first] = gifter_and_giftee.second;
       emitter << node;
@@ -187,19 +174,16 @@ public:
 
     if (std::filesystem::exists(path)) {
       std::filesystem::permissions(
-          path, std::filesystem::perms::owner_read
-                    | std::filesystem::perms::owner_write
-                    | std::filesystem::perms::group_read
-                    | std::filesystem::perms::others_read);
+          path, std::filesystem::perms::owner_read | std::filesystem::perms::owner_write
+                    | std::filesystem::perms::group_read | std::filesystem::perms::others_read);
     }
 
     if (stream.is_open()) {
       stream.close();
     }
 
-    std::cout
-        << "Wrote the matchings between gifters and giftees to the YAML file: "
-        << path << std::endl;
+    std::cout << "Wrote the matchings between gifters and giftees to the YAML file: " << path
+              << std::endl;
   }
 
   inline bool operator==(const Matchings& other) const noexcept {
@@ -227,9 +211,9 @@ public:
   }
 
 private:
-  // Map of gifter participant names to giftee participant names. For example,
-  // the map element {Alice, Bob} means that Alice is the gifter and Bob is the
-  // giftee, such that Alice is Bob's Secret Santa.
+  // Map of gifter participant names to giftee participant names. For example, the map element
+  // {Alice, Bob} means that Alice is the gifter and Bob is the giftee, such that Alice is Bob's
+  // Secret Santa.
   std::map<std::string, std::string> gifters_to_giftees_;
 };
 

@@ -1,23 +1,20 @@
-// Copyright © 2023 Alexandre Coderre-Chabot
+// Copyright © 2023-2024 Alexandre Coderre-Chabot
 //
 // This file is licensed under the MIT license. For more information, visit:
 //     https://mit-license.org
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-//   - The above copyright notice and this permission notice shall be included
-//     in all copies or substantial portions of the Software.
-//   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-//     OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-//     MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-//     NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-//     DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-//     OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-//     USE OR OTHER DEALINGS IN THE SOFTWARE.
+//   - The above copyright notice and this permission notice shall be included in all copies or
+//   substantial portions of the Software.
+//   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+//   BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 // This file was originally obtained from:
 //     https://github.com/acodcha/secret-santa
@@ -25,24 +22,21 @@
 #ifndef SECRET_SANTA_PARTICIPANT_HPP
 #define SECRET_SANTA_PARTICIPANT_HPP
 
-#include <yaml-cpp/yaml.h>
-
 #include <iostream>
 #include <string>
+#include <yaml-cpp/yaml.h>
 
 namespace SecretSanta {
 
-// A participant in the Secret Santa gift exchange. Contains the participant's
-// information.
+// A participant in the Secret Santa gift exchange. Contains the participant's information.
 class Participant {
 public:
-  // Default constructor. Creates a participant with an empty name, email,
-  // address, and instructions.
+  // Default constructor. Creates a participant with an empty name, email, address, and
+  // instructions.
   Participant() = default;
 
-  // Constructor. Creates a participant from a given name. The email address,
-  // street address, and instructions are empty. Only used for searching through
-  // a set of participants.
+  // Constructor. Creates a participant from a given name. The email address, street address, and
+  // instructions are empty. Only used for searching through a set of participants.
   Participant(const std::string& name) : name_(name) {}
 
   // Constructor. Creates a participant from a YAML node of the form:
@@ -196,8 +190,7 @@ private:
   std::string instructions_;
 };
 
-inline std::ostream& operator<<(
-    std::ostream& stream, const Participant& participant) {
+inline std::ostream& operator<<(std::ostream& stream, const Participant& participant) {
   stream << participant.Print();
   return stream;
 }
