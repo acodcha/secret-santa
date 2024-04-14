@@ -83,7 +83,7 @@ public:
   }
 
   // Constructor. Constructs matchings by reading them from a given YAML file.
-  Matchings(const std::filesystem::path& path) {
+  explicit Matchings(const std::filesystem::path& path) {
     if (!std::filesystem::exists(path)) {
       std::cout << "Cannot find the YAML matchings file at " << path
                 << "; please check the file path." << std::endl;
@@ -132,7 +132,7 @@ public:
   // Map of gifter participant names to giftee participant names. For example, the map element
   // {Alice, Bob} means that Alice is the gifter and Bob is the giftee, such that Alice is Bob's
   // Secret Santa.
-  const std::map<std::string, std::string>& GiftersToGiftees() const noexcept {
+  [[nodiscard]] const std::map<std::string, std::string>& GiftersToGiftees() const noexcept {
     return gifters_to_giftees_;
   }
 

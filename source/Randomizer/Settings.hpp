@@ -64,18 +64,18 @@ public:
   Settings& operator=(Settings&& other) noexcept = delete;
 
   // Path to the YAML configuration file to be read.
-  const std::filesystem::path& ConfigurationFile() const noexcept {
+  [[nodiscard]] const std::filesystem::path& ConfigurationFile() const noexcept {
     return configuration_file_;
   }
 
   // Path to the YAML matchings file to be written. If empty, no matchings file is written.
-  const std::filesystem::path& MatchingsFile() const noexcept {
+  [[nodiscard]] const std::filesystem::path& MatchingsFile() const noexcept {
     return matchings_file_;
   }
 
   // Optional seed value for pseudo-random number generation. If no value is specified, the seed
   // value is randomized.
-  constexpr const std::optional<int64_t>& RandomSeed() const noexcept {
+  [[nodiscard]] constexpr const std::optional<int64_t>& RandomSeed() const noexcept {
     return random_seed_;
   }
 
@@ -156,7 +156,7 @@ private:
   }
 
   // Returns whether there is at least one more element after the given element index.
-  bool AtLeastOneMore(const int index, const int count) const noexcept {
+  [[nodiscard]] bool AtLeastOneMore(const int index, const int count) const noexcept {
     return index + 1 < count;
   }
 

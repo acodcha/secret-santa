@@ -31,7 +31,8 @@ namespace SecretSanta {
 
 // Returns a copy of a given string where the copy has been padded to a given length with trailing
 // spaces. If the given string is already longer than the given length, nothing is changed.
-std::string PadToLength(const std::string_view text, const std::size_t length) noexcept {
+[[nodiscard]] std::string PadToLength(
+    const std::string_view text, const std::size_t length) noexcept {
   std::string padded_text{text};
   const std::size_t text_length = text.size();
   if (length > text_length) {

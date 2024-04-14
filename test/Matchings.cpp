@@ -38,7 +38,7 @@ std::set<Participant> CreateSampleParticipants() {
 }
 
 TEST(Matchings, ComparisonOperators) {
-  const Matchings first{{CreateSampleParticipantA()}};
+  const Matchings first{std::set<Participant>{Participant{CreateSampleParticipantA()}}};
   const Matchings second{CreateSampleParticipants()};
   EXPECT_EQ(first, first);
   EXPECT_NE(first, second);
@@ -56,7 +56,7 @@ TEST(Matchings, ConstructorFromNoParticipants) {
 }
 
 TEST(Matchings, ConstructorFromOneParticipant) {
-  const Matchings matchings{{CreateSampleParticipantA()}};
+  const Matchings matchings{std::set<Participant>{Participant{CreateSampleParticipantA()}}};
   EXPECT_EQ(matchings.GiftersToGiftees().size(), 1);
   EXPECT_NE(matchings.GiftersToGiftees().find("Alice Smith"), matchings.GiftersToGiftees().cend());
   EXPECT_EQ(matchings.GiftersToGiftees().at("Alice Smith"), "Alice Smith");

@@ -60,7 +60,7 @@ TEST(Participant, ConstructorFromYamlNode) {
 
 TEST(Participant, CopyAssignmentOperator) {
   const Participant first{CreateSampleParticipantA()};
-  Participant second = CreateSampleParticipantB();
+  Participant second = Participant{CreateSampleParticipantB()};
   second = first;
   EXPECT_EQ(second, first);
 }
@@ -88,7 +88,7 @@ TEST(Participant, Hash) {
 
 TEST(Participant, MoveAssignmentOperator) {
   Participant first{CreateSampleParticipantA()};
-  Participant second = CreateSampleParticipantB();
+  Participant second{CreateSampleParticipantB()};
   second = std::move(first);
   EXPECT_EQ(second, Participant(CreateSampleParticipantA()));
 }
@@ -117,7 +117,7 @@ TEST(Participant, Stream) {
 
 TEST(Participant, YAML) {
   const Participant participant{CreateSampleParticipantA()};
-  const YAML::Node node = participant.YAML();
+  const YAML::Node node{participant.YAML()};
   ASSERT_TRUE(node.IsMap());
   ASSERT_EQ(node.size(), 1);
   for (const YAML::detail::iterator_value& element : node) {

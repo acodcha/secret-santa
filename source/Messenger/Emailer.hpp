@@ -29,7 +29,7 @@ namespace SecretSanta::Messenger {
 
 // Composes the full email message body for a given gifter. Prefixes a brief greeting to the given
 // main message body and appends the giftee information.
-std::string ComposeFullMessageBody(
+[[nodiscard]] std::string ComposeFullMessageBody(
     const Participant& gifter, const Participant& giftee, const std::string& main_message_body) {
   std::string text;
 
@@ -53,8 +53,9 @@ std::string ComposeFullMessageBody(
 }
 
 // Composes the command used to invoke the S-nail utility for a given gifter.
-std::string ComposeCommand(const Participant& gifter, const std::string& message_subject,
-                           const std::string& message_body) {
+[[nodiscard]] std::string ComposeCommand(
+    const Participant& gifter, const std::string& message_subject,
+    const std::string& message_body) {
   return "echo \"" + message_body + "\" | s-nail --subject \"" + message_subject + "\" "
          + gifter.Email();
 }
@@ -91,7 +92,7 @@ void ComposeAndSendEmailMessages(const Configuration& configuration, const Match
 
     // Obtain the giftee information.
     const std::set<Participant>::const_iterator giftee =
-        configuration.Participants().find({gifter_name_and_giftee_name->second});
+        configuration.Participants().find(Participant{gifter_name_and_giftee_name->second});
 
     if (giftee == configuration.Participants().cend()) {
       continue;

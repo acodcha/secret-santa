@@ -48,17 +48,17 @@ static const std::string Path{"<path>"};
 }  // namespace Value
 
 // Prints usage instructions and exits. Optional.
-std::string_view Help() {
+[[nodiscard]] std::string_view Help() {
   return Key::Help;
 }
 
 // Path to the YAML configuration file to be read. Required.
-std::string Configuration() {
+[[nodiscard]] std::string Configuration() {
   return Key::Configuration + " " + Value::Path;
 }
 
 // Path to the YAML matchings file to be read. Required.
-std::string Matchings() {
+[[nodiscard]] std::string Matchings() {
   return Key::Matchings + " " + Value::Path;
 }
 

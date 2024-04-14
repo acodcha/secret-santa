@@ -38,7 +38,7 @@ public:
   Configuration() = default;
 
   // Constructor. Constructs configuration details by reading them from a YAML configuration file.
-  Configuration(const std::filesystem::path& path) {
+  explicit Configuration(const std::filesystem::path& path) {
     if (!std::filesystem::exists(path)) {
       std::cout << "Cannot find the YAML configuration file at " << path
                 << "; please check the file path." << std::endl;
@@ -112,7 +112,7 @@ public:
 
   // Subject of the email message that will be sent to each participant. A default value is used if
   // no message subject is defined in the YAML configuration file.
-  const std::string& MessageSubject() const noexcept {
+  [[nodiscard]] const std::string& MessageSubject() const noexcept {
     return message_subject_;
   }
 
@@ -120,12 +120,12 @@ public:
   // message body is defined in the YAML configuration file. A brief greeting of "Hello <name>" is
   // automatically prepended to this body, and information regarding the participant's giftee is
   // automatically appended to this body.
-  const std::string& MessageBody() const noexcept {
+  [[nodiscard]] const std::string& MessageBody() const noexcept {
     return message_body_;
   }
 
   // Set of participants.
-  const std::set<Participant>& Participants() const noexcept {
+  [[nodiscard]] const std::set<Participant>& Participants() const noexcept {
     return participants_;
   }
 

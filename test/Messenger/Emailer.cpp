@@ -30,8 +30,8 @@ namespace SecretSanta::Messenger {
 namespace {
 
 TEST(MessengerEmailer, ComposeFullMessageBody) {
-  const Participant gifter = CreateSampleParticipantA();
-  const Participant giftee = CreateSampleParticipantB();
+  const Participant gifter{CreateSampleParticipantA()};
+  const Participant giftee{CreateSampleParticipantB()};
 
   const std::string main_message_body{
       "You are receiving this message because you opted to participate in a Secret Santa gift "
@@ -46,7 +46,7 @@ TEST(MessengerEmailer, ComposeFullMessageBody) {
 }
 
 TEST(MessengerEmailer, ComposeCommand) {
-  const Participant gifter = CreateSampleParticipantA();
+  const Participant gifter{CreateSampleParticipantA()};
   const std::string message_subject{"My Message Subject"};
   const std::string message_body{"My Message Body"};
 

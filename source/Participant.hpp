@@ -37,14 +37,14 @@ public:
 
   // Constructor. Creates a participant from a given name. The email address, street address, and
   // instructions are empty. Only used for searching through a set of participants.
-  Participant(const std::string& name) : name_(name) {}
+  explicit Participant(const std::string& name) : name_(name) {}
 
   // Constructor. Creates a participant from a YAML node of the form:
   //   Alice Smith:
   //     email: alice.smith@gmail.com
   //     address: 123 First Ave, Apt 1, Townsville, CA, 91234 USA
   //     instructions: Leave the package with the doorman in the lobby.
-  Participant(const YAML::Node& node) {
+  explicit Participant(const YAML::Node& node) {
     if (!node.IsMap()) {
       return;
     }
@@ -90,27 +90,27 @@ public:
   Participant& operator=(Participant&& other) noexcept = default;
 
   // Name of this participant. Each participant must have a unique name.
-  const std::string& Name() const noexcept {
+  [[nodiscard]] const std::string& Name() const noexcept {
     return name_;
   }
 
   // Email address of this participant.
-  const std::string& Email() const noexcept {
+  [[nodiscard]] const std::string& Email() const noexcept {
     return email_;
   }
 
   // Street address of this participant.
-  const std::string& Address() const noexcept {
+  [[nodiscard]] const std::string& Address() const noexcept {
     return address_;
   }
 
   // Additional instructions for mailing packages to this participant.
-  const std::string& Instructions() const noexcept {
+  [[nodiscard]] const std::string& Instructions() const noexcept {
     return instructions_;
   }
 
   // Prints this participant as a string.
-  std::string Print() const noexcept {
+  [[nodiscard]] std::string Print() const noexcept {
     std::string details;
 
     if (!email_.empty()) {
@@ -144,7 +144,7 @@ public:
   //     email: alice.smith@gmail.com
   //     address: 123 First Ave, Apt 1, Townsville, CA, 91234 USA
   //     instructions: Leave the package with the doorman in the lobby.
-  YAML::Node YAML() const {
+  [[nodiscard]] YAML::Node YAML() const {
     YAML::Node node;
     node[name_]["email"] = email_;
     node[name_]["address"] = address_;
