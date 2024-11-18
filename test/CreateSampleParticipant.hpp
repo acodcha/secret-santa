@@ -1,6 +1,12 @@
 // Copyright © 2023-2024 Alexandre Coderre-Chabot
 //
-// This file is licensed under the MIT license. For more information, visit:
+// This file is part of Secret Santa, a simple C++ utility that organizes a "Secret Santa" gift
+// exchange event!
+//
+// Secret Santa is hosted at:
+//     https://github.com/acodcha/phq
+//
+// Secret Santa is licensed under the MIT License:
 //     https://mit-license.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -9,19 +15,17 @@
 // sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //   - The above copyright notice and this permission notice shall be included in all copies or
-//   substantial portions of the Software.
+//     substantial portions of the Software.
 //   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-//   BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-//   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-//   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-// This file was originally obtained from:
-//     https://github.com/acodcha/secret-santa
+//     BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//     DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM
+//     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #ifndef SECRET_SANTA_CREATE_SAMPLE_PARTICIPANT_HPP
 #define SECRET_SANTA_CREATE_SAMPLE_PARTICIPANT_HPP
 
+#include <set>
 #include <yaml-cpp/yaml.h>
 
 #include "../source/Participant.hpp"
@@ -49,6 +53,14 @@ YAML::Node CreateSampleParticipantC() {
   node["Claire Jones"]["address"] = "789 Third Rd, Villageburg, CA 93456 USA";
   node["Claire Jones"]["instructions"] = "Hide the package behind the bushes.";
   return node;
+}
+
+std::set<Participant> CreateSampleParticipants() {
+  std::set<Participant> participants;
+  participants.emplace(CreateSampleParticipantA());
+  participants.emplace(CreateSampleParticipantB());
+  participants.emplace(CreateSampleParticipantC());
+  return participants;
 }
 
 }  // namespace SecretSanta

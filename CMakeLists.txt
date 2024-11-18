@@ -1,26 +1,26 @@
-# Copyright © 2023 Alexandre Coderre-Chabot
+# Copyright © 2023-2024 Alexandre Coderre-Chabot
 #
-# This file is licensed under the MIT license. For more information, visit:
+# This file is part of Secret Santa, a simple C++ utility that organizes a "Secret Santa" gift
+# exchange event!
+#
+# Secret Santa is hosted at:
+#     https://github.com/acodcha/phq
+#
+# Secret Santa is licensed under the MIT License:
 #     https://mit-license.org
 #
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+# associated documentation files (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge, publish, distribute,
+# sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-#   - The above copyright notice and this permission notice shall be included in
-#     all copies or substantial portions of the Software.
-#   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-#     THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-#     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-#     DEALINGS IN THE SOFTWARE.
-#
-# This file was originally obtained from:
-#     https://github.com/acodcha/secret-santa
+#   - The above copyright notice and this permission notice shall be included in all copies or
+#     substantial portions of the Software.
+#   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+#     BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+#     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+#     DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM
+#     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 
@@ -57,11 +57,11 @@ FetchContent_MakeAvailable(yaml-cpp)
 message(STATUS "The yaml-cpp library was fetched from: https://github.com/jbeder/yaml-cpp.git")
 
 # Define the Secret Santa Randomizer executable.
-add_executable(secret-santa-randomizer ${PROJECT_SOURCE_DIR}/source/Randomizer/Main.cpp)
+add_executable(secret-santa-randomizer ${PROJECT_SOURCE_DIR}/source/RandomizerMain.cpp)
 target_link_libraries(secret-santa-randomizer PUBLIC stdc++fs yaml-cpp)
 
 # Define the Secret Santa Messenger executable.
-add_executable(secret-santa-messenger ${PROJECT_SOURCE_DIR}/source/Messenger/Main.cpp)
+add_executable(secret-santa-messenger ${PROJECT_SOURCE_DIR}/source/MessengerMain.cpp)
 target_link_libraries(secret-santa-messenger PUBLIC stdc++fs yaml-cpp)
 
 # Configure the Secret Santa tests.
@@ -93,15 +93,15 @@ if(TEST_SECRET_SANTA)
   target_link_libraries(test_configuration yaml-cpp GTest::gtest_main)
   gtest_discover_tests(test_configuration)
 
+  add_executable(test_emailer ${PROJECT_SOURCE_DIR}/test/Emailer.cpp)
+  target_link_libraries(test_emailer yaml-cpp GTest::gtest_main)
+  gtest_discover_tests(test_emailer)
+
   add_executable(test_matchings ${PROJECT_SOURCE_DIR}/test/Matchings.cpp)
   target_link_libraries(test_matchings yaml-cpp GTest::gtest_main)
   gtest_discover_tests(test_matchings)
 
-  add_executable(test_messenger_emailer ${PROJECT_SOURCE_DIR}/test/Messenger/Emailer.cpp)
-  target_link_libraries(test_messenger_emailer yaml-cpp GTest::gtest_main)
-  gtest_discover_tests(test_messenger_emailer)
-
-  add_executable(test_messenger_settings ${PROJECT_SOURCE_DIR}/test/Messenger/Settings.cpp)
+  add_executable(test_messenger_settings ${PROJECT_SOURCE_DIR}/test/MessengerSettings.cpp)
   target_link_libraries(test_messenger_settings yaml-cpp GTest::gtest_main)
   gtest_discover_tests(test_messenger_settings)
 
@@ -109,7 +109,7 @@ if(TEST_SECRET_SANTA)
   target_link_libraries(test_participant yaml-cpp GTest::gtest_main)
   gtest_discover_tests(test_participant)
 
-  add_executable(test_randomizer_settings ${PROJECT_SOURCE_DIR}/test/Randomizer/Settings.cpp)
+  add_executable(test_randomizer_settings ${PROJECT_SOURCE_DIR}/test/RandomizerSettings.cpp)
   target_link_libraries(test_randomizer_settings yaml-cpp GTest::gtest_main)
   gtest_discover_tests(test_randomizer_settings)
 
