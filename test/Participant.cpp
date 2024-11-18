@@ -1,6 +1,12 @@
 // Copyright © 2023-2024 Alexandre Coderre-Chabot
 //
-// This file is licensed under the MIT license. For more information, visit:
+// This file is part of Secret Santa, a simple C++ utility that organizes a "Secret Santa" gift
+// exchange event!
+//
+// Secret Santa is hosted at:
+//     https://github.com/acodcha/phq
+//
+// Secret Santa is licensed under the MIT License:
 //     https://mit-license.org
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -9,15 +15,12 @@
 // sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //   - The above copyright notice and this permission notice shall be included in all copies or
-//   substantial portions of the Software.
+//     substantial portions of the Software.
 //   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-//   BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-//   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-//   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-//
-// This file was originally obtained from:
-//     https://github.com/acodcha/secret-santa
+//     BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+//     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//     DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM
+//     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "../source/Participant.hpp"
 
@@ -25,13 +28,11 @@
 
 #include "CreateSampleParticipant.hpp"
 
-namespace SecretSanta {
-
 namespace {
 
 TEST(Participant, ComparisonOperators) {
-  const Participant first{CreateSampleParticipantA()};
-  const Participant second{CreateSampleParticipantB()};
+  const SecretSanta::Participant first{SecretSanta::CreateSampleParticipantA()};
+  const SecretSanta::Participant second{SecretSanta::CreateSampleParticipantB()};
   EXPECT_EQ(first, first);
   EXPECT_NE(first, second);
   EXPECT_LT(first, second);
@@ -43,7 +44,7 @@ TEST(Participant, ComparisonOperators) {
 }
 
 TEST(Participant, ConstructorFromName) {
-  const Participant participant{"Alice Smith"};
+  const SecretSanta::Participant participant{"Alice Smith"};
   EXPECT_EQ(participant.Name(), "Alice Smith");
   EXPECT_TRUE(participant.Email().empty());
   EXPECT_TRUE(participant.Address().empty());
@@ -51,7 +52,7 @@ TEST(Participant, ConstructorFromName) {
 }
 
 TEST(Participant, ConstructorFromYamlNode) {
-  const Participant participant{CreateSampleParticipantA()};
+  const SecretSanta::Participant participant{SecretSanta::CreateSampleParticipantA()};
   EXPECT_EQ(participant.Name(), "Alice Smith");
   EXPECT_EQ(participant.Email(), "alice.smith@gmail.com");
   EXPECT_EQ(participant.Address(), "123 First Ave, Apt 1, Townsville, CA 91234 USA");
@@ -59,20 +60,21 @@ TEST(Participant, ConstructorFromYamlNode) {
 }
 
 TEST(Participant, CopyAssignmentOperator) {
-  const Participant first{CreateSampleParticipantA()};
-  Participant second = Participant{CreateSampleParticipantB()};
+  const SecretSanta::Participant first{SecretSanta::CreateSampleParticipantA()};
+  SecretSanta::Participant second =
+      SecretSanta::Participant{SecretSanta::CreateSampleParticipantB()};
   second = first;
   EXPECT_EQ(second, first);
 }
 
 TEST(Participant, CopyConstructor) {
-  const Participant first{CreateSampleParticipantA()};
-  const Participant second{first};
+  const SecretSanta::Participant first{SecretSanta::CreateSampleParticipantA()};
+  const SecretSanta::Participant second{first};
   EXPECT_EQ(second, first);
 }
 
 TEST(Participant, DefaultConstructor) {
-  const Participant participant;
+  const SecretSanta::Participant participant;
   EXPECT_TRUE(participant.Name().empty());
   EXPECT_TRUE(participant.Email().empty());
   EXPECT_TRUE(participant.Address().empty());
@@ -80,34 +82,34 @@ TEST(Participant, DefaultConstructor) {
 }
 
 TEST(Participant, Hash) {
-  const Participant first{CreateSampleParticipantA()};
-  const Participant second{CreateSampleParticipantB()};
-  std::hash<Participant> hash;
+  const SecretSanta::Participant first{SecretSanta::CreateSampleParticipantA()};
+  const SecretSanta::Participant second{SecretSanta::CreateSampleParticipantB()};
+  std::hash<SecretSanta::Participant> hash;
   EXPECT_NE(hash(first), hash(second));
 }
 
 TEST(Participant, MoveAssignmentOperator) {
-  Participant first{CreateSampleParticipantA()};
-  Participant second{CreateSampleParticipantB()};
+  SecretSanta::Participant first{SecretSanta::CreateSampleParticipantA()};
+  SecretSanta::Participant second{SecretSanta::CreateSampleParticipantB()};
   second = std::move(first);
-  EXPECT_EQ(second, Participant(CreateSampleParticipantA()));
+  EXPECT_EQ(second, SecretSanta::Participant(SecretSanta::CreateSampleParticipantA()));
 }
 
 TEST(Participant, MoveConstructor) {
-  Participant first{CreateSampleParticipantA()};
-  Participant second{std::move(first)};
-  EXPECT_EQ(second, Participant(CreateSampleParticipantA()));
+  SecretSanta::Participant first{SecretSanta::CreateSampleParticipantA()};
+  SecretSanta::Participant second{std::move(first)};
+  EXPECT_EQ(second, SecretSanta::Participant(SecretSanta::CreateSampleParticipantA()));
 }
 
 TEST(Participant, Print) {
-  const Participant participant{CreateSampleParticipantA()};
+  const SecretSanta::Participant participant{SecretSanta::CreateSampleParticipantA()};
   EXPECT_EQ(participant.Print(),
             "Alice Smith (email: alice.smith@gmail.com; address: 123 First Ave, Apt 1, Townsville, "
             "CA 91234 USA; instructions: Leave the package with the doorman in the lobby.)");
 }
 
 TEST(Participant, Stream) {
-  const Participant participant{CreateSampleParticipantA()};
+  const SecretSanta::Participant participant{SecretSanta::CreateSampleParticipantA()};
   std::stringstream stream;
   stream << participant;
   EXPECT_EQ(stream.str(),
@@ -116,7 +118,7 @@ TEST(Participant, Stream) {
 }
 
 TEST(Participant, YAML) {
-  const Participant participant{CreateSampleParticipantA()};
+  const SecretSanta::Participant participant{SecretSanta::CreateSampleParticipantA()};
   const YAML::Node node{participant.YAML()};
   ASSERT_TRUE(node.IsMap());
   ASSERT_EQ(node.size(), 1);
@@ -134,5 +136,3 @@ TEST(Participant, YAML) {
 }
 
 }  // namespace
-
-}  // namespace SecretSanta
