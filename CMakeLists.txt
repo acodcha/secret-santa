@@ -4,7 +4,7 @@
 # exchange event!
 #
 # Secret Santa is hosted at:
-#     https://github.com/acodcha/phq
+#     https://github.com/acodcha/secret-santa
 #
 # Secret Santa is licensed under the MIT License:
 #     https://mit-license.org
