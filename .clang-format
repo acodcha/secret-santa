@@ -1,14 +1,10 @@
 ---
-# Copyright © 2023-2024 Alexandre Coderre-Chabot
+# Copyright © 2023-2025, Alexandre Coderre-Chabot.
 #
-# This file is part of Secret Santa, a simple C++ utility that organizes a "Secret Santa" gift
-# exchange event!
+# This file is part of Secret Santa, a software utility for organizing a "Secret Santa" gift
+# exchange event! Secret Santa is hosted at: https://github.com/acodcha/secret-santa
 #
-# Secret Santa is hosted at:
-#     https://github.com/acodcha/secret-santa
-#
-# Secret Santa is licensed under the MIT License:
-#     https://mit-license.org
+# Secret Santa is licensed under the MIT License: https://mit-license.org
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 # associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -23,12 +19,11 @@
 #     DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM
 #     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-# This is a configuration file for use with LLVM's ClangFormat automatic source code formatter:
-#     https://clang.llvm.org/docs/ClangFormat.html
+# This is a configuration file for use with LLVM's ClangFormat automatic source code formatter.
+# ClangFormat is hosted at: https://clang.llvm.org/docs/ClangFormat.html
 #
 # This file is compatible with ClangFormat version 18.0.0 or any later version. To format source
-# code files in the Secret Santa repository, run:
-#     clang-format --style=file -i path/to/source/code/files
+# code files, run: clang-format --style=file -i path/to/source/code/files
 #
 AccessModifierOffset: -2
 AlignAfterOpenBracket: Align
@@ -177,7 +172,7 @@ PenaltyBreakBeforeFirstCallParameter: 4
 PenaltyBreakComment: 8
 PenaltyBreakFirstLessLess: 4
 PenaltyBreakOpenParenthesis: 4
-PenaltyBreakScopeResolution: 50
+PenaltyBreakScopeResolution: 200
 PenaltyBreakString: 100
 PenaltyBreakTemplateDeclaration: 0
 PenaltyExcessCharacter: 10000
