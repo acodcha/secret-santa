@@ -1,14 +1,10 @@
 ---
-# Copyright © 2023-2024 Alexandre Coderre-Chabot
+# Copyright © 2023-2025, Alexandre Coderre-Chabot.
 #
-# This file is part of Secret Santa, a simple C++ utility that organizes a "Secret Santa" gift
-# exchange event!
+# This file is part of Secret Santa, a software utility for organizing a "Secret Santa" gift
+# exchange event! Secret Santa is hosted at: https://github.com/acodcha/secret-santa
 #
-# Secret Santa is hosted at:
-#     https://github.com/acodcha/secret-santa
-#
-# Secret Santa is licensed under the MIT License:
-#     https://mit-license.org
+# Secret Santa is licensed under the MIT License: https://mit-license.org
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 # associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -23,11 +19,10 @@
 #     DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM
 #     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-# This is a configuration file for use with LLVM's Clang-Tidy automatic source code linter:
-#     https://clang.llvm.org/extra/clang-tidy
+# This is a configuration file for use with LLVM's Clang-Tidy automatic source code linter.
+# Clang-Tidy is hosted at: https://clang.llvm.org/extra/clang-tidy
 #
-# To run the linter on source code files in the Secret Santa repository, run:
-#     clang-tidy --extra-arg=-std=c++17 /path/to/source/code/files
+# To lint source code files, run: clang-tidy --extra-arg=-std=c++20 /path/to/source/code/files
 #
 Checks: '
 *,

@@ -1,6 +1,6 @@
 # Secret Santa
 
-[![build and test](https://github.com/acodcha/secret-santa/actions/workflows/build_and_test.yaml/badge.svg?branch=main)](https://github.com/acodcha/secret-santa/actions/workflows/build_and_test.yaml)
+[![tests](https://github.com/acodcha/secret-santa/actions/workflows/tests.yaml/badge.svg?branch=main)](https://github.com/acodcha/secret-santa/actions/workflows/tests.yaml)
 
 Simple C++ utility that organizes a "Secret Santa" gift exchange event! Given a list of participant names, addresses, and emails, this project randomizes the gift exchange and sends instructions via email to each participant.
 

@@ -1,0 +1,55 @@
+name: tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  check_formatting:
+    name: Check source code formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Install the FindUtils and ClangFormat packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes findutils clang-format
+      - name: Print the version of the FindUtils package
+        run: find --version
+      - name: Print the version of the ClangFormat package
+        run: clang-format --version
+      - name: Check that all source code files are correctly formatted
+        run: |
+          find . -iname *.hpp -or -iname *.cpp | xargs clang-format --style=file -i
+          CHANGES=$(git diff --name-only)
+          if ! [ -z "$CHANGES" ]; then
+            echo "Some source code files are incorrectly formatted. Format source code files with:"
+            echo "    find . -iname *.hpp -or -iname *.cpp | xargs clang-format --style=file -i"
+            exit 1;
+          fi
+  build_and_test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Install the C++ and CMake packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes g++ cmake
+      - name: Print the version of the C++ package
+        run: c++ --version
+      - name: Print the version of the CMake package
+        run: cmake --version
+      - name: Configure the project
+        run: |
+          mkdir --parents build
+          cd build
+          cmake .. -DTEST_SECRET_SANTA=ON
+      - name: Build the project
+        run: |
+          cd build
+          make --jobs=16
+      - name: Run the tests
+        run: |
+          cd build
+          make test
