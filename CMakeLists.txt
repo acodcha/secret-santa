@@ -1,13 +1,9 @@
-# Copyright © 2023-2024 Alexandre Coderre-Chabot
+# Copyright © 2023-2025, Alexandre Coderre-Chabot.
 #
-# This file is part of Secret Santa, a simple C++ utility that organizes a "Secret Santa" gift
-# exchange event!
+# This file is part of Secret Santa, a software utility for organizing a "Secret Santa" gift
+# exchange event! Secret Santa is hosted at: https://github.com/acodcha/secret-santa
 #
-# Secret Santa is hosted at:
-#     https://github.com/acodcha/secret-santa
-#
-# Secret Santa is licensed under the MIT License:
-#     https://mit-license.org
+# Secret Santa is licensed under the MIT License: https://mit-license.org
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 # associated documentation files (the "Software"), to deal in the Software without restriction,
