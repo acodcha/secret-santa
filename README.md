@@ -2,7 +2,7 @@
 
 [![tests](https://github.com/acodcha/secret-santa/actions/workflows/tests.yaml/badge.svg?branch=main)](https://github.com/acodcha/secret-santa/actions/workflows/tests.yaml)
 
-Simple C++ utility that organizes a "Secret Santa" gift exchange event! Given a list of participant names, addresses, and emails, this project randomizes the gift exchange and sends instructions via email to each participant.
+Software utility for organizing a "Secret Santa" gift exchange event! Given a list of participant names, addresses, and emails, this project randomizes the gift exchange and sends instructions via email to each participant.
 
 - [Requirements](#requirements)
 - [Configuration](#configuration)
@@ -19,11 +19,14 @@ Simple C++ utility that organizes a "Secret Santa" gift exchange event! Given a 
 
 ## Requirements
 
-This project requires the following packages:
+Secret Santa requires the following packages:
 
-- **C++17 Compiler:** Any C++17 compiler will do, such as GCC or Clang. On Ubuntu, install GCC with `sudo apt install g++` or Clang with `sudo apt install clang`.
-- **CMake:** On Ubuntu, install CMake with `sudo apt install cmake`.
-- **S-nail**: On Ubuntu, install S-nail with `sudo apt install s-nail`.
+- **Git:** Secret Santa uses the Git source control system and is stored as a Git repository and therefore requires the Git source control system to be installed on your system. On Ubuntu, install the Git source control system with `sudo apt install git` or visit <https://git-scm.com> for alternate means of installation.
+- **C++:** Secret Santa is written in the C++ programming language and therefore requires a compiler for the C++ programming language with support for the C++17 standard or any more recent standard to be installed on your system. Any compiler for the C++ programming language should do, such as GCC or Clang.
+  - On Ubuntu, install GCC with `sudo apt install g++` or visit <https://gcc.gnu.org> for alternate means of installation.
+  - On Ubuntu, install Clang with `sudo apt install clang` or visit <https://clang.llvm.org> for alternate means of installation.
+- **CMake:** Secret Santa uses the CMake build system to compile its C++ source code and therefore requires the CMake build system to be installed on your system. On Ubuntu, install CMake with `sudo apt install cmake` or visit <https://cmake.org> for alternate means of installation.
+- **S-nail**: Secret Santa uses the S-nail library for sending emails and therefore requires this library to be installed on your system. On Ubuntu, install S-nail with `sudo apt install s-nail`.
 
 Additionally, the _yaml-cpp_ library (<https://github.com/jbeder/yaml-cpp>) is used for parsing YAML files. However, you do not need to install this library; instead, this library is automatically downloaded, built, and linked with this project when this project is configured.
 
@@ -111,7 +114,7 @@ This builds the main executables:
 
 ### Usage: Configuration File
 
-A sample YAML configuration file is shown here: [test/configuration.yaml](test/configuration.yaml)
+A sample YAML configuration file can be found here: [test/configuration.yaml](test/configuration.yaml)
 
 The YAML configuration file must follow the following schema:
 
@@ -166,7 +169,7 @@ The command-line arguments are:
 
 ### Usage: Matchings File
 
-A sample YAML matchings file is shown here: [test/matchings.yaml](test/matchings.yaml)
+A sample YAML matchings file can be found here: [test/matchings.yaml](test/matchings.yaml)
 
 The YAML matchings file must follow the following schema:
 
